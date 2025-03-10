@@ -1,19 +1,20 @@
-import Container from "./components/app-ui/Container"
-import Footer from "./components/app-ui/Footer"
-import Header from "./components/app-ui/Header"
-import { Button } from "./components/ui/button"
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import { RootLayout } from "./layout/MainLayout";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <main>
-      <Header/>
-      <Container>
-        <h1 className="text-2xl font-bold ">Hello World</h1>
-        <Button>Click Me</Button>
-      </Container>
-      <Footer />
-    </main>
-  )
+    <>
+      <Routes>
+        <Route path="/" element={<RootLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+          
+        </Route>
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;
