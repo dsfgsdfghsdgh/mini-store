@@ -8,7 +8,7 @@ function App() {
     <main>
       <Header/>
       <Container>
-        <h1 className="text-2xl font-bold">Hello World</h1>
+        <h1 className="text-2xl font-bold ">Hello World</h1>
         <Button>Click Me</Button>
       </Container>
       <Footer />
