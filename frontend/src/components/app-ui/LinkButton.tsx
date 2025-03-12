@@ -10,7 +10,7 @@ type LinkProps = {
 export default function LinkButton({ children, className, to }: LinkProps) {
   return (
     <Link
-      replace={true}
+      replace
       to={to ? to : "/"}
       className={mergedefaultCss(
         " bg-darkText/80 hover:bg-darkText text-whiteText py-2.5 px-6 rounded-full flex items-center text-center gap-2 duration-200",

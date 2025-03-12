@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link, useNavigate } from "react-router-dom";
+import { FaAngleDown } from "react-icons/fa";
 
 type CateResutType = {
   message: string;
@@ -89,7 +90,10 @@ export default function Header() {
           {" "}
           <Container className="py-2  md:px-4 flex items-center gap-5 justify-between max-w-4xl ">
             <DropdownMenu>
-              <DropdownMenuTrigger className="w-40">Select</DropdownMenuTrigger>
+              <DropdownMenuTrigger className="w-40 flex justify-evenly items-center focus:outline-0 ">
+                Select
+                <FaAngleDown className="mt-1" />
+              </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {categories.map((category) => (
                   <DropdownMenuItem
