@@ -27,11 +27,19 @@ app.use(cookieParser());
 
 // import routes and declaratio
 import healthRoutes from "./core/routes/health.routes";
+import categoryRoutes from "./core/routes/cotegory.routes";
+import blogRoutes from "./core/routes/blog.routes";
+import highlightRoutes from "./core/routes/highlight.routes";
+import productRoutes from "./core/routes/protuct.routes";
 
 
 
 //  use routes
 app.use("/api/v1/health", healthRoutes);
+app.use("/api/v1/category", categoryRoutes);
+app.use("/api/v1/blog", blogRoutes);
+app.use("/api/v1/highlight", highlightRoutes);
+app.use("/api/v1/product", productRoutes);
 
 
 app.use(errorHandler);
