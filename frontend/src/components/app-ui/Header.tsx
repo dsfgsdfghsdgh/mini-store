@@ -1,15 +1,43 @@
 import { logo } from "@/assets";
 import Container from "./Container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoClose, IoSearchOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { FiHeart } from "react-icons/fi";
-import { FaChevronDown } from "react-icons/fa";
 import { bottomNavigation } from "@/data/header";
+import { getData } from "@/config/apiConfig";
+import { getCategoryRequest } from "@/lib/apiEndpoint";
+import { CategoryProps } from "@/types/types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Link, useNavigate } from "react-router-dom";
+
+type CateResutType = {
+  message: string;
+  data: CategoryProps[];
+};
 
 export default function Header() {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState<string | null>(null);
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      const result: CateResutType = await getData(getCategoryRequest);
+      setCategories(result.data);
+    };
+    fetchCategory();
+  }, []);
+
+  const handleCategoryClick = (categoryId: string) => {
+    navigate(`/category/${categoryId}`);
+  };
   return (
     <>
       <header>
@@ -60,16 +88,34 @@ export default function Header() {
         <div className="w-full bg-darkText text-whiteText ">
           {" "}
           <Container className="py-2  md:px-4 flex items-center gap-5 justify-between max-w-4xl ">
-            <p className="flex items-center gap-1">
-              Select Category <FaChevronDown />
-            </p>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="w-40">Select</DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {categories.map((category) => (
+                  <DropdownMenuItem
+                    key={category._id}
+                    onClick={() => setSearchText(null)}
+                    className="flex w-full items-center gap-2 rounded-lg py-2 px-3 data-[focus]:bg-white/20 tracking-wide "
+                  >
+                    <span
+                      onClick={() => handleCategoryClick(category._base)}
+                      className="flex w-full items-center gap-2 rounded-lg data-[focus]:bg-white/20 tracking-wide"
+                    >
+                      {category?.name}
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             {bottomNavigation.map((nav) => (
-              <span
-              className="uppercase hidden md:inline-flex text-sm font-semibold text-whiteText/90 hover:text-whiteText duration-200 relative hover:underline hover:transition-shadow cursor-pointer"
+              <Link
+                className="uppercase hidden md:inline-flex text-sm font-semibold text-whiteText/90 hover:text-whiteText duration-200 relative hover:underline hover:transition-shadow cursor-pointer"
                 key={nav.link}
+                to={nav.link}
               >
                 {nav.title}
-              </span>
+              </Link>
             ))}
           </Container>
         </div>
