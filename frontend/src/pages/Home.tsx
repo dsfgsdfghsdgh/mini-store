@@ -1,9 +1,11 @@
-import React from 'react'
+import BannerCategories from "@/components/app-ui/CategoryBanner";
+import HomeBanner from "@/components/app-ui/HomeBanner";
 
 export default function Home() {
   return (
-    <div>
-      Hii
-    </div>
-  )
+    <>
+      <BannerCategories />
+      <HomeBanner />
+    </>
+  );
 }
