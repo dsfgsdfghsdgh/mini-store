@@ -41,7 +41,7 @@ export default function Header() {
   };
   return (
     <>
-      <header>
+      <header className=" md:sticky md:top-0 z-50">
         {/* first header */}
         <div className="w-full bg-whiteText ">
           <Container className="h-20 flex items-center justify-between md:px-4">
