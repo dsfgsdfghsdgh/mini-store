@@ -13,6 +13,7 @@ type CategoriesData = {
 
 const Categories = () => {
   const [categories, setCategories] = useState<CategoryProps[]>();
+  console.log(categories)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,12 +46,12 @@ const Categories = () => {
           <Link
             to={`/category/${item?._base}`}
             key={item?._id}
-            className="w-full h-auto relative group overflow-hidden"
+            className="w-full h-auto relative group overflow-hidden flex justify-center"
           >
             <img
               src={item?.image}
               alt="categoryImage"
-              className="w-full h-auto rounded-md group-hover:scale-110 duration-300"
+              className="w-2/3 h-4/5 object-cover rounded-md group-hover:scale-110 duration-300"
             />
             <div className="absolute bottom-3 w-full text-center">
               <p className="text-sm md:text-base font-bold">{item?.name}</p>

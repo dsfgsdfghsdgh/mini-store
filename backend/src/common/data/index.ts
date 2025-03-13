@@ -12,104 +12,79 @@ export const cat = {
   computersAndLaptop: "computersAndLaptop",
   camerasAndPhotos: "camerasAndPhotos",
 };
+
+const uri = "http://localhost:5000/assets";
+
 export const categories = [
   {
     _id: 1001,
     name: "TV & Audio",
-    image: "https://i.ibb.co/kM0FR2h/cat-Tv-Audio.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "tvAndAudio",
   },
   {
     _id: 1002,
     name: "TV Box",
-    image: "https://i.ibb.co/71hR65V/catTvBox.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "tvBox",
   },
   {
     _id: 1003,
     name: "Power Tools",
-    image: "https://i.ibb.co/0V0g6Gz/cat-Powertool.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "powerTools",
   },
   {
     _id: 1004,
     name: "Headphones",
-    image: "https://i.ibb.co/zST2Xdp/cat-Headphone.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "headphones",
   },
   {
     _id: 1005,
     name: "Cell Phones",
-    image: "https://i.ibb.co/jgk59BL/catPhone.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "cellPhones",
   },
   {
     _id: 1006,
     name: "Smart Watches",
-    image: "https://i.ibb.co/B4NKfBZ/cat-Smart-Watch.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "smartWatches",
   },
   {
     _id: 1007,
     name: "Game & Video",
-    image: "https://i.ibb.co/4gwLwT2/cat-Gaming.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "gameAndVideo",
   },
   {
     _id: 1008,
     name: "Robot Clean",
-    image: "https://i.ibb.co/xjpdQrr/cat-Robot-Clean.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "robotClean",
   },
   {
     _id: 1009,
     name: "Sport Watches",
-    image: "https://i.ibb.co/HdNVLzh/cat-Sport-Watch.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "sportWatches",
   },
   {
     _id: 1010,
     name: "Tablets",
-    image: "https://i.ibb.co/qCzTx4F/cat-Tablet.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "tablets",
   },
   {
     _id: 1011,
     name: "Computers & Laptop",
-    image: "https://i.ibb.co/74bZ8PH/cat-Computer.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "computersAndLaptop",
   },
   {
     _id: 1012,
     name: "Cameras & Photos",
-    image: "https://i.ibb.co/SVQVWSS/cat-Camera.webp",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
     _base: "camerasAndPhotos",
   },
-];
+].map((category, index) => ({
+  ...category,
+  image: `${uri}/category/${category._base}.jpeg`,
+  description:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis repellendus dolore.",
+  _id: 1001 + index,
+}));
+
+
 
 export const highlightsProducts = [
   {
@@ -117,27 +92,27 @@ export const highlightsProducts = [
     name: "New Deals at Best Prices",
     title: "From $40.00",
     buttonTitle: "Browse Deals",
-    image: "https://i.ibb.co/G951N5B/highlights-One.webp",
+    image: `${uri}/newProduct.jpg`,
     _base: "/product",
     color: "#000000",
   },
   {
     _id: 3002,
-    name: "Colorful Redmi  Note 6 Pro",
-    title: "From $40.00",
+    name: "I Phone 14 Pro Max Out",
+    title: "From $800.00",
     buttonTitle: "Shop Cellphone",
-    image: "https://i.ibb.co/bLRNKGq/highlights-Two.webp",
+    image: `${uri}/iphone12.jpg`,
     _base: "/category/cellPhones",
-    color: "#ffffff",
+    color: "#ggg",
   },
   {
     _id: 3003,
     name: "1000 mAh Power Bank",
     title: "From $40.00",
     buttonTitle: "Shop Now",
-    image: "https://i.ibb.co/svWYstT/highlights-Three.webp",
+    image: `${uri}/powerBank.jpg`,
     _base: "/product",
-    color: "#ffffff",
+    color: "#000000",
   },
 ];
 
