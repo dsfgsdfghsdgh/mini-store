@@ -26,7 +26,7 @@ const ProductCard = ({ item }: Props) => {
           onClick={handleProduct}
           src={item?.images[0]}
           alt="productImage"
-          className="w-full h-full rounded-md object-cover group-hover:scale-110 duration-300"
+          className="w-full h-full rounded-md object-contain group-hover:scale-110 duration-300"
         />
         <ProductCardSideNav />
       </div>

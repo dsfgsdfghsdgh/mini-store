@@ -73,14 +73,14 @@ const ProductById = () => {
           {!!id && productData && _.isEmpty(allProducts) ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {/* Image Gallery */}
-              <div className="flex">
+              <div className="flex gap-x-3">
                 <div className="flex flex-col gap-2">
                   {productData?.images?.map((item, index) => (
                     <img
                       src={item}
                       alt="img"
                       key={index}
-                      className={`w-20 h-20 cursor-pointer rounded-md transition-all duration-300 ${
+                      className={`w-20 h-20 cursor-pointer rounded-md transition-all duration-300 object-contain ${
                         imgUrl === item
                           ? "border-2 border-black shadow-md opacity-100"
                           : "opacity-70 hover:opacity-100"
@@ -89,11 +89,11 @@ const ProductById = () => {
                     />
                   ))}
                 </div>
-                <div className="flex-1 flex justify-center items-center">
+                <div className="overflow-hidden rounded-4xl  h-9/12 w-9/12 ">
                   <img
                     src={imgUrl}
                     alt="mainImage"
-                    className="max-w-full rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+                    className="h-full w-full transition-transform hover:scale-105 object-contain"
                   />
                 </div>
               </div>
@@ -192,7 +192,7 @@ const ProductById = () => {
                 <AddToCartBtn
                   product={productData}
                   title="Buy now"
-                  className="bg-black py-3 text-white rounded-lg hover:bg-gray-900 transition-all"
+                  className="bg-black py-3 text-white rounded-lg hover:bg-gray-900 transition-all hover:scale-100"
                 />
 
                 <div className="bg-gray-100 p-5 rounded-md flex flex-col items-center justify-center gap-2">
