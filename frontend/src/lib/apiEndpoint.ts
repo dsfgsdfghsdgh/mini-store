@@ -5,3 +5,6 @@ export const getCategoryRequest = "/category/";
 export const getHighlightsRequest = "/highlight/";
 
 export const getCategoriesRequest = "/category/";
+
+export const getProductRequest = "/product/";
+
