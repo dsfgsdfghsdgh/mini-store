@@ -119,7 +119,7 @@ export const highlightsProducts = [
 export const blogsData = [
   {
     _id: 4001,
-    image: "https://i.ibb.co/XbQf5HS/blogOne.webp",
+    image: `${uri}/blog1.jpg`,
     title: "iPhone 15 rear camera design will be available",
     _base: "Technology",
     description:
@@ -127,7 +127,7 @@ export const blogsData = [
   },
   {
     _id: 4002,
-    image: "https://i.ibb.co/wzNpcwp/blogTwo.webp",
+    image: `${uri}/blog2.jpg`,
     title: "Setup your surround sound speaker",
     _base: "Samrt thing",
     description:
@@ -135,7 +135,7 @@ export const blogsData = [
   },
   {
     _id: 4003,
-    image: "https://i.ibb.co/prdZ3s8/blog-Three.webp",
+    image: `${uri}/blog3.jpg`,
     title: "Hook up a receiver for your home theater",
     _base: "Life style",
     description:

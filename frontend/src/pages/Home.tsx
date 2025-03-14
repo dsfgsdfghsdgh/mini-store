@@ -1,3 +1,4 @@
+import Blog from "@/components/app-ui/Blog";
 import Categories from "@/components/app-ui/Categories";
 import BannerCategories from "@/components/app-ui/CategoryBanner";
 import DiscountedBanner from "@/components/app-ui/DiscountedBanner";
@@ -14,6 +15,7 @@ export default function Home() {
       <Categories />
       <ProductList />
       <DiscountedBanner />
+      <Blog />
     </>
   );
 }
