@@ -10,6 +10,8 @@ export const getProductRequest = "/product/";
 
 export const getProductByIdRequest =(id:string) =>(`/product/${id}`);
 
+export const getCategoryProductByIdRequest =(id:string) =>(`/category/${id}`);
+
 export const getBlogRequest = "/blog/";
 
 
