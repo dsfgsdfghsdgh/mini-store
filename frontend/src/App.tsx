@@ -3,7 +3,8 @@ import Home from "./pages/Home";
 import { RootLayout } from "./layout/MainLayout";
 import NotFound from "./pages/NotFound";
 import Category from "./pages/Category";
-import Product from "./pages/Product";
+import ProductById from "./pages/ProductById";
+import Products from "./pages/Product";
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/category/:id" element={<Category />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/product/:id" element={<Product />} />
+          <Route path="/product" element={<Products />} />
+          <Route path="/product/:id" element={<ProductById />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>
