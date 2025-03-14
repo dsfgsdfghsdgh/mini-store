@@ -8,6 +8,8 @@ export const getCategoriesRequest = "/category/";
 
 export const getProductRequest = "/product/";
 
+export const getProductByIdRequest =(id:string) =>(`/product/${id}`);
+
 export const getBlogRequest = "/blog/";
 
 

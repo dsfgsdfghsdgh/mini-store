@@ -1,12 +1,16 @@
 import { mergedefaultCss } from "@/lib/mergeCustomTailwindCss";
+import { ProductProps } from "@/types/types";
 
 const AddToCartBtn = ({
   className,
   title,
+  product,
 }: {
   className?: string;
   title?: string;
+  product?: ProductProps
 }) => {
+  console.log(product)
   return (
     <>
       <button
@@ -16,6 +20,7 @@ const AddToCartBtn = ({
         )}
       >
         {title ? title : "Add to cart"}
+
       </button>
     </>
   );

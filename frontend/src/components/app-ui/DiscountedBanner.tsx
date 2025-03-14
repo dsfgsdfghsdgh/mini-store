@@ -32,7 +32,7 @@ const DiscountedBanner = () => {
           <Link
             key={title}
             to={`/category/${link}`}
-            className="border border-[px] border-gray-300 px-8 py-3 rounded-full capitalize font-medium hover:bg-black hover:text-white duration-200"
+            className="border-[1px] border-gray-300 px-8 py-3 rounded-full capitalize font-medium hover:bg-black hover:text-white duration-200"
           >
             {title}
           </Link>
