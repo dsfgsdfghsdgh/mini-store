@@ -1,4 +1,5 @@
-import { FaRegEye, FaStar } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
+import { IoMdHeart } from "react-icons/io";
 import { LuArrowLeftRight } from "react-icons/lu";;
 
 const ProductCardSideNav = () => {
@@ -8,7 +9,7 @@ const ProductCardSideNav = () => {
       <span
         className="w-11 h-11 inline-flex text-black text-lg items-center justify-center rounded-full hover:text-white hover:bg-black duration-200"
       >
-      <FaStar /> 
+      <IoMdHeart /> 
       </span>
       <span className="w-11 h-11 inline-flex text-black text-lg items-center justify-center rounded-full hover:text-white hover:bg-black duration-200">
         <LuArrowLeftRight />
