@@ -5,11 +5,8 @@ import { validateFileImage } from "../../middlewares/file.middleware";
 import { registerUserService } from "../services/auth.service";
 
 export const registerUser = asyncHandler(async (req, res) => {
-  console.log("registerUser" , req.body)
   const body = createUserSchema.parse(req.body);
   const { path } = validateFileImage(req.file as Express.Multer.File);
-  res.status(200).json({ message: "Server is running" });
-
   const { user } = await registerUserService({
     email: body.email,
     password: body.password,
