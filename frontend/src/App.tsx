@@ -5,7 +5,8 @@ import NotFound from "./pages/NotFound";
 import Category from "./pages/Category";
 import ProductById from "./pages/ProductById";
 import Products from "./pages/Product";
-import SignUp from "./pages/SignUpPage";
+import SignUp from "./pages/auth/SignUpPage";
+import LoginPage from "./pages/auth/LoginPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/product" element={<Products />} />
           <Route path="/product/:id" element={<ProductById />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/login" element={<LoginPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

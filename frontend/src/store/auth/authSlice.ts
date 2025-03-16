@@ -1,5 +1,5 @@
 import API from "@/config/apiConfig";
-import { registerUserRequest } from "@/common/lib/apiEndpoint";
+import { loginUserRequest, registerUserRequest } from "@/common/lib/apiEndpoint";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type InitialStateType = {
@@ -11,8 +11,8 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
   isAuthenticated: false,
-  isLoading: true,
-  user: null,
+  isLoading: false,
+  user: null, 
   error: null,
 };
 
@@ -39,6 +39,21 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
+
+export const loginUser = createAsyncThunk(
+  "loginUser/data",
+  async (formData: { email: string; password: string }) => {
+    try {
+      const response = await API.post(loginUserRequest, formData);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error("User login failed");
+    }
+  }
+)
+
 
 const authSlice = createSlice({
   name: "auth",

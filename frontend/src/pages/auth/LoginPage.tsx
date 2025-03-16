@@ -13,38 +13,37 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signUpSchema } from "@/common/schemas/signup";
+import { loginSchema } from "@/common/schemas/auth";
 import Container from "@/components/app-ui/Container";
 import { signupImage } from "@/assets";
-import { useAppDispatch } from "@/store/store";
-import { registerUser } from "@/store/auth/authSlice";
+import { useAppDispatch, useTypedSelector } from "@/store/store";
+import { loginUser, registerUser } from "@/store/auth/authSlice";
 
-export default function SignupPage() {
-  const [loading, setLoading] = useState<boolean>(false);
-  // const navigate = useNavigate();
+export default function LoginPage() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const form = useForm<z.infer<typeof signUpSchema>>({
-    resolver: zodResolver(signUpSchema),
+  const isLoading = useTypedSelector(state => state.auth.isLoading)
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
-      avatar: null,
     },
   });
 
-  async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    setLoading(true);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
     const response = await dispatch(
-      registerUser({
+      loginUser({
         email: values.email,
         password: values.password,
-        avatar: values.avatar,
       })
     );
-
-    console.log(response);
+    if (registerUser.fulfilled.match(response)) {
+      navigate("/");
+    } else if (registerUser.rejected.match(response)) {
+      alert("Failed to register. Please try again later.");
+    }
   }
 
   return (
@@ -63,7 +62,7 @@ export default function SignupPage() {
 
           {/* Right Side - Sign Up Form */}
           <div className="flex flex-col justify-center items-center p-8">
-            <h2 className="text-3xl font-semibold text-gray-800">Sign Up</h2>
+            <h2 className="text-3xl font-semibold text-gray-800">Login</h2>
             <p className="text-gray-500 mb-4 text-sm">
               Join us and get started!
             </p>
@@ -71,7 +70,7 @@ export default function SignupPage() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full space-y-4"
+                className=" w-full space-y-4 "
               >
                 {/* Email Input */}
                 <FormField
@@ -118,50 +117,24 @@ export default function SignupPage() {
                   )}
                 />
 
-                {/* Avatar Upload */}
-                <FormField
-                  control={form.control}
-                  name="avatar"
-                  render={({ field: { value, onChange, ...fieldProps } }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-700 font-medium">
-                        Profile Picture
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          {...fieldProps}
-                          type="file"
-                          className="w-full px-4  border rounded-lg file:border-none focus:ring-2 focus:ring-neutral-500 focus:outline-none file:text-black"
-                          accept="image/*"
-                          onChange={(event) =>
-                            onChange(
-                              event.target.files ? event.target.files[0] : null
-                            )
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-
                 {/* Submit Button */}
                 <div>
                   <Button
                     type="submit"
-                    disabled={loading}
+                    disabled={isLoading}
                     className={`w-full py-2 px-4 rounded-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-gray-600 transition ${
-                      loading ? "cursor-not-allowed bg-blue-400" : ""
+                      isLoading ? "cursor-not-allowed bg-blue-400" : ""
                     }`}
                   >
-                    {loading ? "Processing..." : "Sign Up"}
+                    {isLoading ? "Processing..." : "Login"}
                   </Button>
                 </div>
 
                 {/* Already have an account? */}
                 <p className="text-sm text-gray-600 text-center mt-2">
-                  Already have an account?{" "}
-                  <a href="/login" className="text-blue-600 hover:underline">
-                    Login
+                  Don't have account ?{" "}
+                  <a href="/sign-up" className="text-blue-600 hover:underline">
+                    Sign Up
                   </a>
                 </p>
               </form>

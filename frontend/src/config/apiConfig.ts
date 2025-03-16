@@ -13,26 +13,6 @@ const API : AxiosInstance  = axios.create(options)
 
 export default API;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const getData = async (endpoint: string) => {
   try {
     const uri = `${backendUri}${endpoint}`;
