@@ -1,8 +1,15 @@
-import { createUserSchema } from "../../common/schema/auth.schema";
-import { CREATED } from "../../constants/httpCode";
+import {
+  createUserSchema,
+  loginUserSchema,
+} from "../../common/schema/auth.schema";
+import { setAuthCookies } from "../../common/utils/cookie";
+import { CREATED, OK } from "../../constants/httpCode";
 import asyncHandler from "../../middlewares/asyncHandler.middleware";
 import { validateFileImage } from "../../middlewares/file.middleware";
-import { registerUserService } from "../services/auth.service";
+import {
+  loginUserService,
+  registerUserService,
+} from "../services/auth.service";
 
 export const registerUser = asyncHandler(async (req, res) => {
   const body = createUserSchema.parse(req.body);
@@ -15,4 +22,20 @@ export const registerUser = asyncHandler(async (req, res) => {
   res
     .status(CREATED)
     .json({ message: "User registered successfully", data: user });
+});
+
+export const loginUser = asyncHandler(async (req, res) => {
+  const body = loginUserSchema.parse({
+    ...req.body,
+    userAgent: req.headers["user-agent"],
+  });
+
+  const { accessToken, refreshToken, user } = await loginUserService(body);
+
+  return setAuthCookies({ res, accessToken, refreshToken }).status(OK).json({
+    message: "User logged in successfully",
+    data: user,
+    accessToken,
+    refreshToken,
+  });
 });
