@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Container from "./Container";
 import Title from "./Title";
 import { getData } from "@/config/apiConfig";
-import { getBlogRequest } from "@/lib/apiEndpoint";
-import { BlogProps } from "@/types/types";
+import { getBlogRequest } from "@/common/lib/apiEndpoint";
+import { BlogProps } from "@/common/types/types";
 
 
 type BlogData = {

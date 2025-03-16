@@ -1,4 +1,4 @@
-import { mergedefaultCss } from "@/lib/mergeCustomTailwindCss";
+import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
 interface Props {
   text: string;
   className?: string;

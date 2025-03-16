@@ -1,4 +1,4 @@
-import { incentives } from "@/data/footer";
+import { incentives } from "@/common/data/footer";
 import Container from "./Container";
 
 const FooterTop = () => {

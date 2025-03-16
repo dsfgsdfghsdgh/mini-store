@@ -1,4 +1,4 @@
-import { backendUri } from "@/lib/apiEndpoint";
+import { backendUri } from "@/common/lib/apiEndpoint";
 import axios, { AxiosInstance } from "axios";
 
 

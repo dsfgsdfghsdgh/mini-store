@@ -1,6 +1,6 @@
 import { getData } from "@/config/apiConfig";
-import { getCategoryRequest } from "@/lib/apiEndpoint";
-import { CategoryProps } from "@/types/types";
+import { getCategoryRequest } from "@/common/lib/apiEndpoint";
+import { CategoryProps } from "@/common/types/types";
 import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import { CustomLeftArrow, CustomRightArrow } from "./CutomArrows"

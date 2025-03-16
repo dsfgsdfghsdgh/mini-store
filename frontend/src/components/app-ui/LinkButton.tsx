@@ -1,4 +1,4 @@
-import { mergedefaultCss } from "@/lib/mergeCustomTailwindCss";
+import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
 import { Link } from "react-router-dom";
 
 type LinkProps = {

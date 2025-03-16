@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getProductRequest } from "@/lib/apiEndpoint";
+import { getProductRequest } from "@/common/lib/apiEndpoint";
 import { getData } from "@/config/apiConfig";
 import Loading from "@/components/app-ui/Loading";
 import Container from "@/components/app-ui/Container";
 import ProductCard from "@/components/app-ui/ProductCard";
-import { ProductProps } from "@/types/types";
+import { ProductProps } from "@/common/types/types";
 import CategoryFilters from "@/components/app-ui/CategoryFilters";
 import { useParams } from "react-router-dom";
 

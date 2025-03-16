@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import _ from "lodash";
-import { ProductProps } from "@/types/types";
-import { getProductByIdRequest, getProductRequest } from "@/lib/apiEndpoint";
+import { ProductProps } from "@/common/types/types";
+import { getProductByIdRequest, getProductRequest } from "@/common/lib/apiEndpoint";
 import { getData } from "@/config/apiConfig";
 import Loading from "@/components/app-ui/Loading";
 import Container from "@/components/app-ui/Container";

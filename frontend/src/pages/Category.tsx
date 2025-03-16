@@ -3,8 +3,8 @@ import Container from "@/components/app-ui/Container";
 import Loading from "@/components/app-ui/Loading";
 import ProductCard from "@/components/app-ui/ProductCard";
 import { getData } from "@/config/apiConfig";
-import { getCategoryProductByIdRequest } from "@/lib/apiEndpoint";
-import { ProductProps } from "@/types/types";
+import { getCategoryProductByIdRequest } from "@/common/lib/apiEndpoint";
+import { ProductProps } from "@/common/types/types";
 import  { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 

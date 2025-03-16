@@ -1,8 +1,8 @@
 import { getData } from "@/config/apiConfig";
-import { getHighlightsRequest } from "@/lib/apiEndpoint";
+import { getHighlightsRequest } from "@/common/lib/apiEndpoint";
 import { useEffect, useState } from "react";
 import Container from "./Container";
-import { HighlightsType } from "@/types/types";
+import { HighlightsType } from "@/common/types/types";
 import { Link } from "react-router-dom";
 
 type HighlightProps = {

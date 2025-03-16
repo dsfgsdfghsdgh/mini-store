@@ -5,10 +5,10 @@ import { IoClose, IoSearchOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { FiHeart } from "react-icons/fi";
-import { bottomNavigation } from "@/data/header";
+import { bottomNavigation } from "@/common/data/header";
 import { getData } from "@/config/apiConfig";
-import { getCategoryRequest } from "@/lib/apiEndpoint";
-import { CategoryProps } from "@/types/types";
+import { getCategoryRequest } from "@/common/lib/apiEndpoint";
+import { CategoryProps } from "@/common/types/types";
 import {
   DropdownMenu,
   DropdownMenuContent,

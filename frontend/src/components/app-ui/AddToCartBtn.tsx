@@ -1,5 +1,5 @@
-import { mergedefaultCss } from "@/lib/mergeCustomTailwindCss";
-import { ProductProps } from "@/types/types";
+import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
+import { ProductProps } from "@/common/types/types";
 
 const AddToCartBtn = ({
   className,

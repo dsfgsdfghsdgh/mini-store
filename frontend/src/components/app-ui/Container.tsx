@@ -1,4 +1,4 @@
-import { mergedefaultCss } from "@/lib/mergeCustomTailwindCss";
+import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
 import React from "react";
 
 type ContainerProps = {

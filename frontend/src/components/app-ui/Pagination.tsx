@@ -1,9 +1,9 @@
 "use client";
-import { ProductProps } from "@/types/types";
+import { ProductProps } from "@/common/types/types";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import ProductCard from "./ProductCard";
-import { getProductRequest } from "@/lib/apiEndpoint";
+import { getProductRequest } from "@/common/lib/apiEndpoint";
 import { getData } from "@/config/apiConfig";
 
 type ItemsProps = {

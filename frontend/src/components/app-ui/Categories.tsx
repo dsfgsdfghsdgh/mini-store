@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Container from "./Container";
-import { getCategoriesRequest } from "@/lib/apiEndpoint";
+import { getCategoriesRequest } from "@/common/lib/apiEndpoint";
 import { getData } from "@/config/apiConfig";
 import { Link } from "react-router-dom";
 import Title from "./Title";
-import { CategoryProps } from "@/types/types";
+import { CategoryProps } from "@/common/types/types";
 
 type CategoriesData = {
   message: string, 

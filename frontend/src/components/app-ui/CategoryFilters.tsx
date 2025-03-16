@@ -1,6 +1,6 @@
 import { getData } from "@/config/apiConfig";
-import { getCategoriesRequest } from "@/lib/apiEndpoint";
-import { CategoryProps } from "@/types/types";
+import { getCategoriesRequest } from "@/common/lib/apiEndpoint";
+import { CategoryProps } from "@/common/types/types";
 import { useEffect, useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";

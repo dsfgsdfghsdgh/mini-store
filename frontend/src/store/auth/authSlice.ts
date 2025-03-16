@@ -1,5 +1,5 @@
 import API from "@/config/apiConfig";
-import { registerUserRequest } from "@/lib/apiEndpoint";
+import { registerUserRequest } from "@/common/lib/apiEndpoint";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type  InitialStateType = {

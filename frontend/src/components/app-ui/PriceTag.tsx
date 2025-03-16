@@ -1,5 +1,5 @@
 import FormattedPrice from "./FormattedPrice";
-import { mergedefaultCss } from "@/lib/mergeCustomTailwindCss";
+import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
 
 interface Props {
   regularPrice?: number;

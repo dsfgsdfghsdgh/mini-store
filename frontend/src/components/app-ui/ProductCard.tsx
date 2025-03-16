@@ -1,5 +1,5 @@
 import { MdOutlineStarOutline } from "react-icons/md";
-import { ProductProps } from "@/types/types";
+import { ProductProps } from "@/common/types/types";
 import AddToCartBtn from "./AddToCartBtn";
 import ProductCardSideNav from "./ProductCardSideNav";
 import { useNavigate } from "react-router-dom";
