@@ -19,7 +19,7 @@ const initialState: InitialStateType = {
 type UserRegisterType = {
   email: string;
   password: string;
-  name: string;
+  avatar: File | null;
 };
 
 export const registerUser = createAsyncThunk(

@@ -16,13 +16,15 @@ import { z } from "zod";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUpSchema } from "@/common/schemas/signup";
-import API from "@/config/apiConfig";
 import Container from "@/components/app-ui/Container";
 import { signupImage } from "@/assets";
+import { useAppDispatch } from "@/store/store";
+import { registerUser } from "@/store/auth/authSlice";
 
 export default function SignupPage() {
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -34,13 +36,15 @@ export default function SignupPage() {
 
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     setLoading(true);
-    const formData = new FormData();
+    const response = await dispatch(
+      registerUser({
+        email: values.email,
+        password: values.password,
+        avatar: values.avatar,
+      })
+    );
 
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    if (values.avatar) formData.append("avatar", values.avatar);
-
-    console.log(formData);
+    console.log(response);
   }
 
   return (
@@ -80,6 +84,7 @@ export default function SignupPage() {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          autoComplete="Email"
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                           placeholder="Enter your email"
                           {...field}
@@ -101,6 +106,7 @@ export default function SignupPage() {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          autoComplete="current-password"
                           type="password"
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                           placeholder="Enter your password"
