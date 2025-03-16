@@ -1,4 +1,37 @@
 import { backendUri } from "@/lib/apiEndpoint";
+import axios, { AxiosInstance } from "axios";
+
+
+
+const options = {
+  baseURL : backendUri,
+  withCredentials : true,
+}
+
+
+const API : AxiosInstance  = axios.create(options)
+
+export default API;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const getData = async (endpoint: string) => {
   try {
@@ -19,3 +52,4 @@ export const getData = async (endpoint: string) => {
     throw error;
   }
 };
+

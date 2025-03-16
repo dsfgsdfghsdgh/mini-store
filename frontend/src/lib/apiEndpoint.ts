@@ -14,5 +14,4 @@ export const getCategoryProductByIdRequest =(id:string) =>(`/category/${id}`);
 
 export const getBlogRequest = "/blog/";
 
-
-
+export const registerUserRequest = "/auth/register";
