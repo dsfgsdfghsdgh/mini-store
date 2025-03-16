@@ -31,6 +31,7 @@ import categoryRoutes from "./core/routes/cotegory.routes";
 import blogRoutes from "./core/routes/blog.routes";
 import highlightRoutes from "./core/routes/highlight.routes";
 import productRoutes from "./core/routes/protuct.routes";
+import authRoutes from "./core/routes/auth.routes";
 
 
 
@@ -40,6 +41,7 @@ app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/blog", blogRoutes);
 app.use("/api/v1/highlight", highlightRoutes);
 app.use("/api/v1/product", productRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 
 app.use(errorHandler);
