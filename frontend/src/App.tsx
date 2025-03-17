@@ -7,23 +7,42 @@ import ProductById from "./pages/ProductById";
 import Products from "./pages/Product";
 import SignUp from "./pages/auth/SignUpPage";
 import LoginPage from "./pages/auth/LoginPage";
+import { CheckAuth } from "./components/layout/CheckAuth";
+import { useAppDispatch, useTypedSelector } from "./store/store";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth/authSlice";
+import Loading from "./components/app-ui/Loading";
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<RootLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/category/:id" element={<Category />} />
-          <Route path="/product" element={<Products />} />
-          <Route path="/product/:id" element={<ProductById />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/login" element={<LoginPage />} />
+  const { isAuthenticated, isLoading } = useTypedSelector(
+    (state) => state.auth
+  );
+  const dispatch = useAppDispatch();
 
-          <Route path="*" element={<NotFound />} />
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  if (isLoading) return <Loading />;
+
+  return (
+    <Routes>
+      {/* Protected Routes - Wrapped with CheckAuth */}
+      <Route element={<CheckAuth isAuthenticated={isAuthenticated} />}>
+        <Route path="/" element={<RootLayout />}>
+          <Route index element={<Home />} />
+          <Route path="category/:id" element={<Category />} />
+          <Route path="product" element={<Products />} />
+          <Route path="product/:id" element={<ProductById />} />
+
+          {/* Public Routes */}
+          <Route path="sign-up" element={<SignUp />} />
+          <Route path="login" element={<LoginPage />} />
         </Route>
-      </Routes>
-    </>
+      </Route>
+
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
