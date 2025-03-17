@@ -16,6 +16,7 @@ const handleZodError = (res: Response, error: z.ZodError) => {
   return res.status(BAD_REQUEST).json({
     message: errorMessage.join(", "),
     errors,
+    success: false,
   });
 };
 
@@ -24,6 +25,7 @@ const handleApiError = (res: Response, error: ApiError) => {
     statusCode: error.statusCode,
     message: error.message,
     errorCode: error.errorCode,
+    success: error.success,
   });
 };
 
@@ -40,6 +42,7 @@ const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
     statusCode: INTERNAL_SERVER_ERROR,
     message: "Error occured",
     error,
+    success: false,
   });
 
   next();

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -18,7 +18,7 @@ import { loginSchema } from "@/common/schemas/auth";
 import Container from "@/components/app-ui/Container";
 import { signupImage } from "@/assets";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
-import { loginUser, registerUser } from "@/store/auth/authSlice";
+import { loginUser } from "@/store/auth/authSlice";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -39,9 +39,9 @@ export default function LoginPage() {
         password: values.password,
       })
     );
-    if (registerUser.fulfilled.match(response)) {
+    if (loginUser.fulfilled.match(response)) {
       navigate("/");
-    } else if (registerUser.rejected.match(response)) {
+    } else if (loginUser.rejected.match(response)) {
       alert("Failed to register. Please try again later.");
     }
   }

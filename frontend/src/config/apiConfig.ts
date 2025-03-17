@@ -1,35 +1,24 @@
 import { backendUri } from "@/common/lib/apiEndpoint";
 import axios, { AxiosInstance } from "axios";
 
-
-
 const options = {
-  baseURL : backendUri,
-  withCredentials : true,
-}
+  baseURL: backendUri,
+  withCredentials: true,
+};
 
-
-const API : AxiosInstance  = axios.create(options)
+const API: AxiosInstance = axios.create(options);
 
 export default API;
 
 export const getData = async (endpoint: string) => {
   try {
-    const uri = `${backendUri}${endpoint}`;
-    const response = await fetch(uri, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
+    const response = await API.get(endpoint);
+    if (!response.data) {
       throw new Error(`API request failed with status ${response.status}`);
     }
-    const data = await response.json();
-    return data;
+    return response.data;
   } catch (error) {
     console.log("bhai error in", endpoint, error);
     throw error;
   }
 };
-

@@ -4,13 +4,13 @@ import { ProductProps } from "@/common/types/types";
 const AddToCartBtn = ({
   className,
   title,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   product,
 }: {
   className?: string;
   title?: string;
   product?: ProductProps
 }) => {
-  console.log(product)
   return (
     <>
       <button

@@ -29,7 +29,7 @@ const ProductById = () => {
   const [productData, setProductData] = useState<ProductProps | null>(null);
   const [allProducts, setAllProducts] = useState<ProductProps[]>([]);
   const [loading, setLoading] = useState(false);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState("#");
   const [color, setColor] = useState("");
   const { id } = useParams();
 

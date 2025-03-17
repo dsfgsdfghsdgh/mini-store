@@ -68,19 +68,33 @@ const authSlice = createSlice({
     builder
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = null;
         console.log("action", action);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message || "error in user registration";
         console.log("action", action);
-      });
-  },
+      })
+      .addCase(loginUser.pending, (state) =>{
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state , action)=>{
+        
+        console.log("action", action);
+        state.isLoading= false;
+        state.user = action.payload.data
+        state.isAuthenticated = true;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error?.message || "error in user login";
+        console.log("action", action);
+      })
+      
+  }
 });
 
 export const { setUser } = authSlice.actions;

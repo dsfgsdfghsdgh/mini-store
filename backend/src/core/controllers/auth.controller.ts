@@ -21,7 +21,11 @@ export const registerUser = asyncHandler(async (req, res) => {
   });
   res
     .status(CREATED)
-    .json({ message: "User registered successfully", data: user });
+    .json({
+      message: "User registered successfully",
+      success: true,
+      data: user,
+    });
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
@@ -34,8 +38,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   return setAuthCookies({ res, accessToken, refreshToken }).status(OK).json({
     message: "User logged in successfully",
+    success: true,
     data: user,
-    accessToken,
-    refreshToken,
   });
 });
