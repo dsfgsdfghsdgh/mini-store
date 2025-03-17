@@ -3,11 +3,6 @@ import prisma from "../../database/dbConnect";
 import appAssert from "../../middlewares/appAssert.middleware";
 import asyncHandler from "../../middlewares/asyncHandler.middleware";
 
-
-
-
-
-
 export const userAccessHandler = asyncHandler(async (req, res) => {
   const user = await prisma.user.findFirst({
     where: { id: req.userId },
@@ -19,5 +14,6 @@ export const userAccessHandler = asyncHandler(async (req, res) => {
   return res.status(OK).json({
     message: "User authenticated successfully",
     data: rest,
+    success: true,
   });
 });

@@ -2,8 +2,10 @@ import {
   createUserSchema,
   loginUserSchema,
 } from "../../common/schema/auth.schema";
-import { setAuthCookies } from "../../common/utils/cookie";
-import { CREATED, OK } from "../../constants/httpCode";
+import { clearAuthCookie, setAuthCookies } from "../../common/utils/cookie";
+import { BAD_REQUEST, CREATED, OK } from "../../constants/httpCode";
+import prisma from "../../database/dbConnect";
+import appAssert from "../../middlewares/appAssert.middleware";
 import asyncHandler from "../../middlewares/asyncHandler.middleware";
 import { validateFileImage } from "../../middlewares/file.middleware";
 import {
@@ -40,5 +42,21 @@ export const loginUser = asyncHandler(async (req, res) => {
     message: "User logged in successfully",
     success: true,
     data: user,
+  });
+});
+
+//logout
+export const logoutUser = asyncHandler(async (req, res) => {
+  const sessionId = req.sessionId;
+
+  const session = await prisma.session.delete({
+    where: { id: sessionId },
+  })
+
+  appAssert(session, BAD_REQUEST, "session not found  in the database");
+
+  return clearAuthCookie(res).status(OK).json({
+    success: true,
+    message: "Logged out successfully",
   });
 });

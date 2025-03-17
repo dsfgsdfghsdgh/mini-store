@@ -17,3 +17,7 @@ export const getBlogRequest = "/blog/";
 export const registerUserRequest = "/auth/register";
 
 export const loginUserRequest = "/auth/login";
+
+export const userAuthRequest ="/user/";
+
+export const logoutUserRequest = "/auth/logout";

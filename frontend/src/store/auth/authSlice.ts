@@ -1,5 +1,10 @@
 import API from "@/config/apiConfig";
-import { loginUserRequest, registerUserRequest } from "@/common/lib/apiEndpoint";
+import {
+  loginUserRequest,
+  logoutUserRequest,
+  registerUserRequest,
+  userAuthRequest,
+} from "@/common/lib/apiEndpoint";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type InitialStateType = {
@@ -12,7 +17,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   isAuthenticated: false,
   isLoading: false,
-  user: null, 
+  user: null,
   error: null,
 };
 
@@ -40,7 +45,6 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-
 export const loginUser = createAsyncThunk(
   "loginUser/data",
   async (formData: { email: string; password: string }) => {
@@ -52,8 +56,32 @@ export const loginUser = createAsyncThunk(
       throw new Error("User login failed");
     }
   }
-)
+);
 
+export const checkAuth = createAsyncThunk("checkAuth/data", async () => {
+  try {
+    const response = await API.get(userAuthRequest, {
+      headers: {
+        "Cache-Control":
+          "no-store , no-cache , must-revalidate , proxy-revalidate",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Authentication failed");
+  }
+});
+
+export const logoutUser = createAsyncThunk("logoutUser/data", async () => {
+  try {
+    await API.get(logoutUserRequest);
+    return;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Authentication failed");
+  }
+});
 
 const authSlice = createSlice({
   name: "auth",
@@ -78,23 +106,47 @@ const authSlice = createSlice({
         state.error = action.error?.message || "error in user registration";
         console.log("action", action);
       })
-      .addCase(loginUser.pending, (state) =>{
+      .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(loginUser.fulfilled, (state , action)=>{
-        
+      .addCase(loginUser.fulfilled, (state, action) => {
         console.log("action", action);
-        state.isLoading= false;
-        state.user = action.payload.data
-        state.isAuthenticated = true;
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.data : null;
+        state.isAuthenticated = action.payload.success;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message || "error in user login";
         console.log("action", action);
       })
-      
-  }
+      .addCase(checkAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.data : null;
+        state.isAuthenticated = action.payload.success;
+      })
+      .addCase(checkAuth.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error?.message || "Authentication failed";
+        console.log("action", action);
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error?.message || "Authentication failed";
+        console.log("action", action);
+      });
+  },
 });
 
 export const { setUser } = authSlice.actions;
