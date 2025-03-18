@@ -4,7 +4,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import PriceTag from "./PriceTag";
 import { ProductProps } from "@/common/types/types";
 import { useTypedSelector, useAppDispatch } from "@/store/store";
-import { addToCart, removeFromCart  } from "@/store/features/cartSlice";
+import { addToCart,DecQuantityByOne, removeFromCart  } from "@/store/features/cartSlice";
 import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
 
 const AddToCartBtn = ({
@@ -15,7 +15,7 @@ const AddToCartBtn = ({
 }: {
   className?: string;
   title?: string;
-  product?: ProductProps;
+  product: ProductProps;
   showPrice?: boolean;
 }) => {
   const dispatch = useAppDispatch(); 
@@ -34,25 +34,25 @@ const AddToCartBtn = ({
 
   const handleAddToCart = () => {
     if (product) {
-      dispatch(addToCart(product)); // ✅ FIX: Use dispatch
+      dispatch(addToCart(product));
       toast.success(`${product?.name.substring(0, 10)} added successfully!`);
     } else {
       toast.error("Product is undefined!");
     }
   };
 
-  const handleDeleteProduct = () => {
-    if (existingProduct) {
-      if (existingProduct.quantity > 1) {
-        dispatch(removeFromCart(String(existingProduct._id)));
-        toast.success(
-          `${product?.name.substring(0, 10)} decreased successfully`
-        );
-      } else {
-        toast.error("You cannot decrease less than 1");
+  const handleDecQuantity = () => {
+    if(existingProduct){
+      if(existingProduct?.quantity > 1){
+        dispatch(DecQuantityByOne(product));
+      }else {
+        dispatch(removeFromCart(product));
+        toast.error("Cart is empty, please add product to cart!");
       }
     }
-  };
+  }
+
+
 
   const newClassName = mergedefaultCss(
     "bg-[#f7f7f7] uppercase text-xs py-3 text-center rounded-full font-semibold hover:bg-black hover:text-white hover:scale-105 duration-200 cursor-pointer",
@@ -84,7 +84,7 @@ const AddToCartBtn = ({
       {existingProduct ? (
         <div className="flex self-center items-center justify-center gap-2">
           <button
-            onClick={handleDeleteProduct}
+            onClick={handleDecQuantity}
             className="bg-[#f7f7f7] text-black p-2 border-[1px] border-gray-200 hover:border-skyText rounded-full text-sm hover:bg-white duration-200 cursor-pointer"
           >
             <FaMinus />
