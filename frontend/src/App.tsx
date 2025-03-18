@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { checkAuth } from "./store/auth/authSlice";
 import Loading from "./components/app-ui/Loading";
 import Cart from "./pages/Cart";
+import Favorite from "./pages/Favorite";
 
 function App() {
   const { isAuthenticated, isLoading } = useTypedSelector(
@@ -43,6 +44,7 @@ function App() {
           <Route path="product" element={<Products />} />
           <Route path="product/:id" element={<ProductById />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="favorite" element={<Favorite />} />
 
           {/* Public Routes */}
           <Route path="sign-up" element={<SignUp />} />

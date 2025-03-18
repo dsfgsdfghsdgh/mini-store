@@ -29,6 +29,7 @@ export default function Header() {
   const [searchText, setSearchText] = useState<string | null>(null);
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const cartProducts = useTypedSelector(state => state.cart.cartProducts)
+  const favoriteProduct = useTypedSelector((state) => state.favorite.favoriteProducts);
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -44,6 +45,10 @@ export default function Header() {
 
   const handleCategoryClick = (categoryId: string) => {
     navigate(`/category/${categoryId}`);
+  };
+
+  const handleToFavorite = () => {
+    navigate(`/favorite`);
   };
   return (
     <>
@@ -74,12 +79,12 @@ export default function Header() {
             {/* menu  */}
             <div className="flex gap-x-6 text-center text-2xl ">
               <BiUser className="hover:text-skyText duration-200 cursor-pointer" />
-              <div className="relative block">
+              <button className="relative block" onClick={handleToFavorite}>
                 <FiHeart className="hover:text-skyText duration-200 cursor-pointer" />
                 <span className="absolute inline-flex items-center justify-center -top-1 -right-2 text-[9px] rounded-full size-4 bg-redText text-whiteText">
-                  0
+                  {favoriteProduct.length}
                 </span>
-              </div>
+              </button>
 
               <button className="relative block" onClick={handleToCart}>
                 <RiShoppingCart2Line className="hover:text-skyText duration-200 cursor-pointer" />
