@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import { RootLayout } from "./components/layout/MainLayout";
 import NotFound from "./pages/NotFound";
@@ -18,7 +18,10 @@ function App() {
   const { isAuthenticated, isLoading } = useTypedSelector(
     (state) => state.auth
   );
+  const location = useLocation();
   const dispatch = useAppDispatch();
+
+  const from = location.state?.from || "/";
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -29,14 +32,17 @@ function App() {
   return (
     <Routes>
       {/* Protected Routes - Wrapped with CheckAuth */}
-      <Route element={<CheckAuth isAuthenticated={isAuthenticated} />}>
+      <Route
+        element={
+          <CheckAuth isAuthenticated={isAuthenticated} redirectPath={from} />
+        }
+      >
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="category/:id" element={<Category />} />
           <Route path="product" element={<Products />} />
           <Route path="product/:id" element={<ProductById />} />
           <Route path="cart" element={<Cart />} />
-
 
           {/* Public Routes */}
           <Route path="sign-up" element={<SignUp />} />

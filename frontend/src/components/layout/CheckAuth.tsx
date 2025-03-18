@@ -20,7 +20,14 @@ export function CheckAuthRoot({
   const shouldRedirectToLogin = !isAuthenticated && !isOnPublicRoute;
   const shouldRedirectToHome = isAuthenticated && isOnPublicRoute;
 
-  if (shouldRedirectToLogin) return <Navigate to="/login" replace={true} />;
+  if (shouldRedirectToLogin)
+    return (
+      <Navigate
+        to="/login"
+        state={{ from: location.pathname }}
+        replace={true}
+      />
+    );
   if (shouldRedirectToHome)
     return <Navigate to={redirectPath} replace={true} />;
 
