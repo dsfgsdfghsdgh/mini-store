@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
+import { useTypedSelector } from "@/store/store";
 
 type CateResutType = {
   message: string;
@@ -27,6 +28,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState<string | null>(null);
   const [categories, setCategories] = useState<CategoryProps[]>([]);
+  const cartProducts = useTypedSelector(state => state.cart.cartProducts)
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -35,6 +37,10 @@ export default function Header() {
     };
     fetchCategory();
   }, []);
+
+  const handleToCart =()=>{
+    navigate("/cart");
+  }
 
   const handleCategoryClick = (categoryId: string) => {
     navigate(`/category/${categoryId}`);
@@ -75,12 +81,12 @@ export default function Header() {
                 </span>
               </div>
 
-              <div className="relative block">
+              <button className="relative block" onClick={handleToCart}>
                 <RiShoppingCart2Line className="hover:text-skyText duration-200 cursor-pointer" />
                 <span className="absolute inline-flex items-center justify-center -top-1 -right-2 text-[9px] rounded-full size-4 bg-redText text-whiteText">
-                  0
+                  {cartProducts.length}
                 </span>
-              </div>
+              </button>
             </div>
           </Container>
         </div>
