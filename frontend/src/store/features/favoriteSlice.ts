@@ -17,11 +17,9 @@ const favoriteSlice = createSlice({
       const existing = state.favoriteProducts.find(
         (p) => p._id === action.payload._id
       );
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        state.favoriteProducts.push({ ...action.payload, quantity: 1 });
-      }
+      if (!existing) {
+        state.favoriteProducts = [...state.favoriteProducts, action.payload];
+      } 
       localStorage.setItem("favorite", JSON.stringify(state.favoriteProducts));
     },
     DecQuantityByOne: (state, action: PayloadAction<ProductProps>) => {
