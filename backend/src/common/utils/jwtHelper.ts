@@ -27,7 +27,7 @@ type SignOtionsWithSecretKey = SignOptions & {
 // access token secret
 export const accessTokenSecret: SignOtionsWithSecretKey = {
   secret: ACCESS_TOKEN_SECRET,
-  expiresIn: "15m",
+  expiresIn: "50m",
   ...defaultOptions,
 };
 // refresh token secret

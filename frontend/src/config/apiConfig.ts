@@ -18,7 +18,6 @@ export const getData = async (endpoint: string) => {
     }
     return response.data;
   } catch (error) {
-    console.log("bhai error in", endpoint, error);
-    throw error;
+    throw new Error(error as string);
   }
 };

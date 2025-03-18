@@ -68,8 +68,7 @@ export const checkAuth = createAsyncThunk("checkAuth/data", async () => {
     });
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw new Error("Authentication failed");
+    throw new Error(error as string || "Error getting");
   }
 });
 
@@ -97,20 +96,20 @@ const authSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
-        console.log("action", action);
+        // console.log("action", action);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message || "error in user registration";
-        console.log("action", action);
+        // console.log("action", action);
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log("action", action);
+        // console.log("action", action);
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.data : null;
         state.isAuthenticated = action.payload.success;
@@ -118,7 +117,7 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message || "error in user login";
-        console.log("action", action);
+        // console.log("action", action);
       })
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
@@ -131,7 +130,7 @@ const authSlice = createSlice({
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message || "Authentication failed";
-        console.log("action", action);
+        // console.log("action", action);
       })
       .addCase(logoutUser.pending, (state) => {
         state.isLoading = true;
@@ -144,7 +143,7 @@ const authSlice = createSlice({
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message || "Authentication failed";
-        console.log("action", action);
+        // console.log("action", action);
       });
   },
 });
