@@ -17,7 +17,6 @@ const Highlights = () => {
     const fetchData = async () => {
       try {
         const response: HighlightProps = await getData(getHighlightsRequest);
-        console.log("API Response:", response); // Debugging
         setHighlightsData(response?.data || []);
       } catch (error) {
         console.error("Error fetching data", error);

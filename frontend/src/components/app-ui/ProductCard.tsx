@@ -42,7 +42,7 @@ const ProductCard = ({ item }: Props) => {
           <MdOutlineStarOutline />
           <MdOutlineStarOutline />
         </div>
-        <AddToCartBtn />
+        <AddToCartBtn product={item} />
       </div>
 
       

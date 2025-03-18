@@ -13,7 +13,6 @@ type CategoriesData = {
 
 const Categories = () => {
   const [categories, setCategories] = useState<CategoryProps[]>();
-  console.log(categories)
 
   useEffect(() => {
     const fetchData = async () => {
