@@ -6,11 +6,12 @@ import {
   userAuthRequest,
 } from "@/common/lib/apiEndpoint";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { UserTypes } from "@/common/types/types";
 
 type InitialStateType = {
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: object | null;
+  user: UserTypes | null;
   error: string | null;
 };
 

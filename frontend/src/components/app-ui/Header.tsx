@@ -50,6 +50,10 @@ export default function Header() {
   const handleToFavorite = () => {
     navigate(`/favorite`);
   };
+
+  const handleToUser =()=>{
+    navigate(`/user`);
+  }
   return (
     <>
       <header className=" md:sticky md:top-0 z-50">
@@ -78,7 +82,7 @@ export default function Header() {
             </div>
             {/* menu  */}
             <div className="flex gap-x-6 text-center text-2xl ">
-              <BiUser className="hover:text-skyText duration-200 cursor-pointer" />
+              <BiUser onClick={handleToUser} className="hover:text-skyText duration-200 cursor-pointer" />
               <button className="relative block" onClick={handleToFavorite}>
                 <FiHeart className="hover:text-skyText duration-200 cursor-pointer" />
                 <span className="absolute inline-flex items-center justify-center -top-1 -right-2 text-[9px] rounded-full size-4 bg-redText text-whiteText">

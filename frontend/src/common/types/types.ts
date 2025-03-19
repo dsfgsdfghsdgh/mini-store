@@ -44,13 +44,15 @@ export interface BlogProps {
 }
 
 export interface UserTypes {
-  currentUser: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    avatar: string;
-    id: string;
-  };
+  avatar?: string;
+  createAt:string;
+  email: string;
+  id: string;
+  updatedAt?: string;
+  username?: string;
+  verifiedEmail: boolean;
+  firstName?: string;
+  lastName?: string;
 }
 
 export interface OrderTypes {

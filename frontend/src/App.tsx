@@ -14,6 +14,7 @@ import { checkAuth } from "./store/auth/authSlice";
 import Loading from "./components/app-ui/Loading";
 import Cart from "./pages/Cart";
 import Favorite from "./pages/Favorite";
+import Profile from "./pages/Profile";
 
 function App() {
   const { isAuthenticated, isLoading } = useTypedSelector(
@@ -45,6 +46,7 @@ function App() {
           <Route path="product/:id" element={<ProductById />} />
           <Route path="cart" element={<Cart />} />
           <Route path="favorite" element={<Favorite />} />
+          <Route path="user" element={<Profile />} />
 
           {/* Public Routes */}
           <Route path="sign-up" element={<SignUp />} />
