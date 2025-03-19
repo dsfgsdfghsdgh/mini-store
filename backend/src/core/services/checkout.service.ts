@@ -10,31 +10,40 @@ type checkoutServiceProps = {
 };
 
 export const checkoutService = async (data: checkoutServiceProps) => {
-  const extractData = data.products.map((p) => ({
-    quantity: p.quantity,
-    price_data: {
-      currency: "USD",
-      unit_price: p.discountedPrice * 100,
-      product_data: {
+  const extractData = await Promise.all(
+    data.products.map(async (p) => {
+      const product = await stripe.products.create({
         name: p.name,
-        variant_id: p._id,
+        metadata: {
+          variant_id: p._id,
+          description: p.description,
+        },
         images: p.images,
-        description: p.description,
-      },
-    },
-  }));
+      });
 
+      return {
+        quantity: p.quantity,
+        price_data: {
+          currency: "USD",
+          unit_amount: p.discountedPrice * 100,
+          product: product.id,
+        },
+      };
+    })
+  );
+  
   const stripeSession = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: extractData,
     mode: "payment",
-    success_url: `${CLIENT_URI}/success?session_id ={CHECKOUT_ID}`,
+    success_url: `${CLIENT_URI}/success?session_id={CHECKOUT_SESSION_ID}`, // ✅ Fixed
     cancel_url: `${CLIENT_URI}/cancel`,
-    customer_email: data.email,
+    customer_email: data.email, // ✅ This works if you're not creating a Stripe customer
     metadata: {
       email: data.email,
     },
   });
+  
 
   appAssert(stripeSession, INTERNAL_SERVER_ERROR, "Error in Stripe session");
 

@@ -1,5 +1,5 @@
 export const getEnv = (value: string, defaultValue?: string) => {
-  const env = process.env[value] || defaultValue;
+  const env = import.meta.env[value] || defaultValue;
   if (!env) {
     throw new Error(`Key ${value} not found in environment variables`);
   }
