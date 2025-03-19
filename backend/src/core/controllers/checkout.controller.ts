@@ -1,10 +1,20 @@
+import { checkoutSchema } from "../../common/schema/checkout.schema";
 import asyncHandler from "../../middlewares/asyncHandler.middleware";
 import { checkoutService } from "../services/checkout.service";
 
-export const checkout = asyncHandler(async (req, res) => {
-  const {items , email} = req.body;
-  await checkoutService({items, email})
-  res.status(200).json({ message: "Server is running" });
+export const checkoutHandle = asyncHandler(async (req, res) => {
+  const body = checkoutSchema.parse({
+    products: req.body.products,
+    email: req.body.email,
+  });
+  const { stripeSessionId } = await checkoutService({
+    email: body.email,
+    products: body.products,
+  });
+  res.status(200).json({
+    message: "Order checkout completed",
+    data: {
+      stripeSessionId,
+    },
+  });
 });
-
-
