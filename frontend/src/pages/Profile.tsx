@@ -8,7 +8,8 @@ const Profile = () => {
   const navigate = useNavigate();
 
   if (!user) {
-    return navigate("/login");
+    navigate("/login");
+    return null;
   }
   return (
     <Container>
