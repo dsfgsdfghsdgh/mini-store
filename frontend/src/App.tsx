@@ -15,6 +15,7 @@ import Loading from "./components/app-ui/Loading";
 import Cart from "./pages/Cart";
 import Favorite from "./pages/Favorite";
 import Profile from "./pages/Profile";
+import Success from "./pages/Success";
 
 function App() {
   const { isAuthenticated, isLoading } = useTypedSelector(
@@ -47,6 +48,7 @@ function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="favorite" element={<Favorite />} />
           <Route path="user" element={<Profile />} />
+          <Route path="success" element={<Success />} />
 
           {/* Public Routes */}
           <Route path="sign-up" element={<SignUp />} />

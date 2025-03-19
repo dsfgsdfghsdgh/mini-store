@@ -23,3 +23,7 @@ export const userAuthRequest ="/user/";
 export const logoutUserRequest = "/auth/logout";
 
 export const checkoutServiceRequest =  "/checkout";
+
+export const newOrderRequest =  "/order/new";
+
+export const getOrdersRequest =  "/order/";
