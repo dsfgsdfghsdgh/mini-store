@@ -1,6 +1,6 @@
 import { z } from "zod";
 // Define the product schema
-const productSchema = z.object({
+export const productSchema = z.object({
   _id: z.number(),
   _base: z.string(),
   reviews: z.number(),

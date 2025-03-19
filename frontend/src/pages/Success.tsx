@@ -1,9 +1,3 @@
-import React from 'react'
-
-export default function Profile() {
-  return (
-    <div>
-      Profile
-    </div>
-  )
+export default function Success() {
+  return <div>import React from 'react'</div>;
 }
