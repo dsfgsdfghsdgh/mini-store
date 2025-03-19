@@ -4,11 +4,6 @@ import { useTypedSelector } from "@/store/store";
 const CheckoutBtn = ({ products }: { products: ProductProps[] }) => {
   const { user } = useTypedSelector((state) => state.auth);
   const handleCheckout = async () => {
-    if (!products || products.length === 0) {
-      return alert("Your cart is empty!");
-    }
-
-    // Implement checkout logic (e.g., API call, redirect to payment)
     console.log("Proceeding to checkout with:", products);
   };
 
