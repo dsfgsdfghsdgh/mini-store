@@ -33,6 +33,7 @@ import highlightRoutes from "./core/routes/highlight.routes";
 import productRoutes from "./core/routes/protuct.routes";
 import authRoutes from "./core/routes/auth.routes";
 import userRoutes from "./core/routes/user.routes";
+import checkoutRoutes from "./core/routes/checkout.routes";
 
 
 
@@ -44,6 +45,7 @@ app.use("/api/v1/highlight", highlightRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/checkout", checkoutRoutes);
 
 
 app.use(errorHandler);

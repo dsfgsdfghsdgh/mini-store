@@ -21,3 +21,5 @@ export const loginUserRequest = "/auth/login";
 export const userAuthRequest ="/user/";
 
 export const logoutUserRequest = "/auth/logout";
+
+export const checkoutServiceRequest =  "/checkout";
