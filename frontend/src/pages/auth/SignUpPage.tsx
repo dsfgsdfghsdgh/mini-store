@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,11 +18,15 @@ import Container from "@/components/app-ui/Container";
 import { signupImage } from "@/assets";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { registerUser } from "@/store/auth/authSlice";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function SignupPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isLoading = useTypedSelector(state => state.auth.isLoading)
+  const isLoading = useTypedSelector((state) => state.auth.isLoading);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -41,133 +44,143 @@ export default function SignupPage() {
         avatar: values.avatar,
       })
     );
+
     if (registerUser.fulfilled.match(response)) {
+      toast.success("Registration successful! Redirecting...");
       navigate("/login");
-    } else if (registerUser.rejected.match(response)) {
-      alert("Failed to register. Please try again later.");
+    } else {
+      toast.error("Failed to register. Please try again.");
     }
   }
 
   return (
     <Container className="flex justify-center">
-      <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl w-full bg-white shadow-lg rounded-2xl overflow-hidden">
-          {/* Left Side - Illustration */}
-          <div className="hidden md:flex justify-center items-center bg-gray-100 p-8">
-            <img
-              src={signupImage}
-              alt="Signup Illustration"
-              className="max-w-xs"
-              draggable="false"
-            />
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl w-full bg-white shadow-lg rounded-2xl overflow-hidden">
+        {/* Left Side - Illustration */}
+        <div className="hidden md:flex justify-center items-center bg-gray-100 p-8">
+          <img
+            src={signupImage}
+            alt="Signup Illustration"
+            className="max-w-xs"
+            draggable="false"
+          />
+        </div>
 
-          {/* Right Side - Sign Up Form */}
-          <div className="flex flex-col justify-center items-center p-8">
-            <h2 className="text-3xl font-semibold text-gray-800">Sign Up</h2>
-            <p className="text-gray-500 mb-4 text-sm">
-              Join us and get started!
-            </p>
+        {/* Right Side - Sign Up Form */}
+        <div className="flex flex-col justify-center items-center p-8 w-full">
+          <h2 className="text-3xl font-semibold text-gray-800">Sign Up</h2>
+          <p className="text-gray-500 mb-4 text-sm">Join us and get started!</p>
 
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full space-y-4"
-              >
-                {/* Email Input */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-700 font-medium">
-                        Email
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          autoComplete="Email"
-                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                          placeholder="Enter your email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full space-y-4"
+            >
+              {/* Email Input */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        autoComplete="email"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Enter your email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                {/* Password Input */}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-700 font-medium">
-                        Password
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          autoComplete="current-password"
-                          type="password"
-                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                          placeholder="Enter your password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              {/* Password Input */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        autoComplete="current-password"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Enter your password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                {/* Avatar Upload */}
-                <FormField
-                  control={form.control}
-                  name="avatar"
-                  render={({ field: { value, onChange, ...fieldProps } }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-700 font-medium">
-                        Profile Picture
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          {...fieldProps}
-                          type="file"
-                          className="w-full px-4  border rounded-lg file:border-none focus:ring-2 focus:ring-neutral-500 focus:outline-none file:text-black"
-                          accept="image/*"
-                          onChange={(event) =>
-                            onChange(
-                              event.target.files ? event.target.files[0] : null
-                            )
+              {/* Avatar Upload with Preview */}
+              <FormField
+                control={form.control}
+                name="avatar"
+                render={({ field: { value, onChange, ...fieldProps } }) => (
+                  <FormItem>
+                    <FormLabel>Profile Picture</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...fieldProps}
+                        type="file"
+                        accept="image/*"
+                        className="w-full px-4 border rounded-lg file:border-none focus:ring-2 focus:ring-neutral-500 focus:outline-none file:text-black"
+                        onChange={(event) => {
+                          const file = event.target.files
+                            ? event.target.files[0]
+                            : null;
+                          onChange(file);
+                          if (file) {
+                            setAvatarPreview(URL.createObjectURL(file));
+                          } else {
+                            setAvatarPreview(null);
                           }
+                        }}
+                      />
+                    </FormControl>
+                    {avatarPreview && (
+                      <div className="mt-2">
+                        <img
+                          src={avatarPreview}
+                          alt="Profile Preview"
+                          className="w-16 h-16 rounded-full object-cover"
                         />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                      </div>
+                    )}
+                  </FormItem>
+                )}
+              />
 
-                {/* Submit Button */}
-                <div>
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full py-2 px-4 rounded-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-gray-600 transition ${
-                      isLoading ? "cursor-not-allowed bg-blue-400" : ""
-                    }`}
-                  >
-                    {isLoading ? "Processing..." : "Sign Up"}
-                  </Button>
-                </div>
+              {/* Submit Button */}
+              <div>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full py-2 px-4 rounded-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-gray-600 transition ${
+                    isLoading
+                      ? "cursor-not-allowed bg-blue-400"
+                      : "bg-blue-600 hover:bg-blue-700"
+                  }`}
+                >
+                  {isLoading ? "Processing..." : "Sign Up"}
+                </Button>
+              </div>
 
-                {/* Already have an account? */}
-                <p className="text-sm text-gray-600 text-center mt-2">
-                  Already have an account?{" "}
-                  <a href="/login" className="text-blue-600 hover:underline">
-                    Login
-                  </a>
-                </p>
-              </form>
-            </Form>
-          </div>
+              {/* Already have an account? */}
+              <p className="text-sm text-gray-600 text-center mt-2">
+                Already have an account?{" "}
+                <a href="/login" className="text-blue-600 hover:underline">
+                  Login
+                </a>
+              </p>
+            </form>
+          </Form>
         </div>
       </div>
     </Container>

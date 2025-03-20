@@ -1,9 +1,15 @@
 import { passwordComparator, passwordHasher } from "../../common/utils/bcrypt";
+import uploadFileToCloudinary from "../../common/utils/cloudinary";
 import { thirtyDaysFromNow } from "../../common/utils/customTime";
-import { accessTokenSecret, refreshTokenSecret, signToken } from "../../common/utils/jwtHelper";
+import {
+  accessTokenSecret,
+  refreshTokenSecret,
+  signToken,
+} from "../../common/utils/jwtHelper";
 import { BAD_REQUEST } from "../../constants/httpCode";
 import prisma from "../../database/dbConnect";
 import appAssert from "../../middlewares/appAssert.middleware";
+import fs from "fs";
 
 type registerUserServiceProps = {
   avatar: string;
@@ -17,13 +23,19 @@ export const registerUserService = async (data: registerUserServiceProps) => {
     where: { email: data.email },
   });
 
+  if (userExists) {
+    fs.unlinkSync(data.avatar);
+  }
+
   appAssert(!userExists, BAD_REQUEST, "user already exists ");
 
   const hashedPassword = await passwordHasher(data.password);
 
+  const UploadedImage = await uploadFileToCloudinary(data.avatar);
+
   const user = await prisma.user.create({
     data: {
-      avatar: data.avatar,
+      avatar: UploadedImage.secure_url,
       email: data.email,
       password: hashedPassword,
     },
@@ -47,11 +59,11 @@ export const loginUserService = async (data: loginUserServiceProps) => {
   });
   appAssert(userExists, BAD_REQUEST, "invaid user does not exist");
 
-  const isValid = await passwordComparator(data.password, userExists.password)
+  const isValid = await passwordComparator(data.password, userExists.password);
 
   appAssert(isValid, BAD_REQUEST, "invalid password or user");
-  
-  //create session 
+
+  //create session
   const session = await prisma.session.create({
     data: {
       userId: userExists.id,
@@ -59,16 +71,21 @@ export const loginUserService = async (data: loginUserServiceProps) => {
     },
   });
 
-  const accessToken = signToken({
-    userId: userExists.id,
-    sessionId: session.id,
-  },accessTokenSecret)
+  const accessToken = signToken(
+    {
+      userId: userExists.id,
+      sessionId: session.id,
+    },
+    accessTokenSecret
+  );
 
-  const refreshToken = signToken({
-    userId: userExists.id,
-    sessionId: session.id,
-  },refreshTokenSecret)
-
+  const refreshToken = signToken(
+    {
+      userId: userExists.id,
+      sessionId: session.id,
+    },
+    refreshTokenSecret
+  );
 
   const updateSession = await prisma.session.update({
     where: { id: session.id },
@@ -77,11 +94,10 @@ export const loginUserService = async (data: loginUserServiceProps) => {
       userAgent: data.userAgent,
       expiresAt: thirtyDaysFromNow(),
     },
-  })
+  });
   return {
     accessToken,
     refreshToken,
     user: { id: userExists.id, email: userExists.email },
   };
-
 };
