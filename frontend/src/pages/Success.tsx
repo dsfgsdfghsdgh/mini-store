@@ -7,14 +7,14 @@ const Success = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const sessionId = new URLSearchParams(location.search).get("session_id");
-
-  console.log("session_id", sessionId)
+  const exp = new URLSearchParams(location.search).get("exp");
+  const isValid = Date.now() <= Number(exp || "0");
 
   useEffect(() => {
-    if (!sessionId) {
-      navigate("/"); 
+    if (!sessionId || !isValid) {
+      navigate("/", { replace: true });
     }
-  }, [sessionId, navigate]);
+  }, [sessionId, navigate, isValid]);
 
   return (
     <Container className="justify-center flex">

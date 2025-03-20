@@ -6,16 +6,15 @@ import Container from "@/components/app-ui/Container";
 const Cancel = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const sessionId = new URLSearchParams(location.search).get("session_id");
   const exp = new URLSearchParams(location.search).get("exp");
 
   const isValid = Date.now() <= Number(exp || "0");
 
   useEffect(() => {
-    if (!sessionId || !isValid) {
-      navigate("/"); // Redirect if no valid session_id
+    if (!isValid) {
+      navigate("/", { replace: true });
     }
-  }, [sessionId, navigate, exp]);
+  }, [navigate, isValid]);
 
   return (
     <Container className="justify-center flex">
@@ -29,7 +28,7 @@ const Cancel = () => {
         </p>
 
         <div className="flex gap-4 mt-6">
-          <Link to="/checkout" replace>
+          <Link to="/cart" replace>
             <button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition duration-300">
               Retry Payment
             </button>

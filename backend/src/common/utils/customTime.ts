@@ -6,3 +6,5 @@ export const thirtyDaysFromNow = () =>
 export const newDate = (date: string) => new Date(date);
 
 export const Now = () => new Date(Date.now());
+
+export const expiryTime = Date.now() + 20 * 24 * 60 * 60 * 1000;
