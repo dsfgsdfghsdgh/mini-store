@@ -1,5 +1,3 @@
-import { logo } from "@/assets";
-import Container from "./Container";
 import { useEffect, useState } from "react";
 import { IoClose, IoSearchOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
@@ -18,127 +16,173 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
 import { useTypedSelector } from "@/store/store";
+import Container from "./Container";
 
-type CateResutType = {
+type CateResultType = {
   message: string;
   data: CategoryProps[];
 };
 
 export default function Header() {
   const navigate = useNavigate();
-  const [searchText, setSearchText] = useState<string | null>(null);
+  const [searchText, setSearchText] = useState<string>("");
   const [categories, setCategories] = useState<CategoryProps[]>([]);
-  const cartProducts = useTypedSelector(state => state.cart.cartProducts)
-  const favoriteProduct = useTypedSelector((state) => state.favorite.favoriteProducts);
+  const cartProducts = useTypedSelector((state) => state.cart.cartProducts);
+  const favoriteProduct = useTypedSelector(
+    (state) => state.favorite.favoriteProducts
+  );
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const result: CateResutType = await getData(getCategoryRequest);
+      const result: CateResultType = await getData(getCategoryRequest);
       setCategories(result.data);
     };
     fetchCategory();
+
+    // Add scroll listener for shadow effect
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleToCart =()=>{
-    navigate("/cart");
-  }
-
-  const handleCategoryClick = (categoryId: string) => {
+  const handleToCart = () => navigate("/cart");
+  const handleCategoryClick = (categoryId: string) =>
     navigate(`/category/${categoryId}`);
-  };
+  const handleToFavorite = () => navigate(`/favorite`);
+  const handleToUser = () => navigate(`/user`);
+  const handleClearSearch = () => setSearchText("");
 
-  const handleToFavorite = () => {
-    navigate(`/favorite`);
-  };
-
-  const handleToUser =()=>{
-    navigate(`/user`);
-  }
   return (
-    <>
-      <header className=" md:sticky md:top-0 z-50">
-        {/* first header */}
-        <div className="w-full bg-whiteText ">
-          <Container className="h-20 flex items-center justify-between md:px-4">
-            {/* logo */}
-            <img src={logo} alt="logo" className="w-44" />
-            {/* search bar */}
-            <div className="hidden md:inline-flex max-w-3xl w-full relative">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        isScrolled ? "shadow-md" : ""
+      }`}
+    >
+      {/* Main header section */}
+      <div className="bg-white border-b">
+        <Container className="md:h-14 h-10 flex items-center justify-between py-2">
+          {/* Text logo instead of image */}
+          <div
+            onClick={() => navigate("/")}
+            className="flex items-center space-x-1 cursor-pointer"
+          >
+            <span className="text-xl md:text-2xl font-bold text-skyText">
+              Shop
+            </span>
+            <span className="text-xl md:text-2xl font-bold text-darkText">
+              Hub
+            </span>
+          </div>
+
+          {/* Search bar */}
+          <div className="hidden md:flex relative flex-1 max-w-xl mx-6">
+            <div className="relative w-full">
               <input
                 type="text"
-                className="appearance-none w-full flex-1 rounded-full text-gray-900 text-lg placeholder:text-base placeholder:tracking-wide shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-normal focus:ring-darkText sm:text-sm px-4 py-2"
+                className="w-full h-10 pl-10 pr-10 rounded-lg border border-gray-300 focus:border-skyText focus:ring-1 focus:ring-skyText transition-all"
                 placeholder="Search products..."
+                value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                value={searchText ? searchText : ""}
               />
-              {searchText ? (
+              <IoSearchOutline className="absolute top-3 left-3 text-gray-400" />
+              {searchText && (
                 <IoClose
-                  onClick={() => setSearchText(null)}
-                  className=" absolute top-2.5 right-4 text-xl hover:text-red-500 cursor-pointer duration-200"
+                  onClick={handleClearSearch}
+                  className="absolute top-3 right-3 text-gray-400 hover:text-redText cursor-pointer"
                 />
-              ) : (
-                <IoSearchOutline className="absolute top-2.5 right-4 text-xl" />
               )}
             </div>
-            {/* menu  */}
-            <div className="flex gap-x-6 text-center text-2xl ">
-              <BiUser onClick={handleToUser} className="hover:text-skyText duration-200 cursor-pointer" />
-              <button className="relative block" onClick={handleToFavorite}>
-                <FiHeart className="hover:text-skyText duration-200 cursor-pointer" />
-                <span className="absolute inline-flex items-center justify-center -top-1 -right-2 text-[9px] rounded-full size-4 bg-redText text-whiteText">
+          </div>
+
+          {/* User controls */}
+          <div className="flex items-center space-x-1 md:space-x-6">
+            <button
+              onClick={handleToUser}
+              className="group p-2 relative rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <BiUser className="text-xl md:text-2xl text-darkText group-hover:text-skyText" />
+              <span className="hidden md:block absolute -bottom-3 left-1/2 transform -translate-x-1/2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                Account
+              </span>
+            </button>
+
+            <button
+              onClick={handleToFavorite}
+              className="group p-2 relative rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <FiHeart className="text-xl md:text-2xl text-darkText group-hover:text-skyText" />
+              {favoriteProduct.length > 0 && (
+                <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs rounded-full bg-redText text-white">
                   {favoriteProduct.length}
                 </span>
-              </button>
+              )}
+              <span className="hidden md:block absolute -bottom-3 left-1/2 transform -translate-x-1/2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                Wishlist
+              </span>
+            </button>
 
-              <button className="relative block" onClick={handleToCart}>
-                <RiShoppingCart2Line className="hover:text-skyText duration-200 cursor-pointer" />
-                <span className="absolute inline-flex items-center justify-center -top-1 -right-2 text-[9px] rounded-full size-4 bg-redText text-whiteText">
+            <button
+              onClick={handleToCart}
+              className="group p-2 relative rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <RiShoppingCart2Line className="text-xl md:text-2xl text-darkText group-hover:text-skyText" />
+              {cartProducts.length > 0 && (
+                <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs rounded-full bg-redText text-white">
                   {cartProducts.length}
                 </span>
-              </button>
-            </div>
-          </Container>
-        </div>
+              )}
+              <span className="hidden md:block absolute -bottom-3 left-1/2 transform -translate-x-1/2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                Cart
+              </span>
+            </button>
+          </div>
+        </Container>
+      </div>
 
-        {/* second header */}
-        <div className="w-full bg-darkText text-whiteText ">
-          {" "}
-          <Container className="py-2  md:px-4 flex items-center gap-5 justify-between max-w-4xl ">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="w-40 flex justify-evenly items-center focus:outline-0 ">
-                Select
-                <FaAngleDown className="mt-1" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {categories.map((category) => (
-                  <DropdownMenuItem
-                    key={category._id}
-                    onClick={() => setSearchText(null)}
-                    className="flex w-full items-center gap-2 rounded-lg py-2 px-3 data-[focus]:bg-white/20 tracking-wide "
-                  >
-                    <span
-                      onClick={() => handleCategoryClick(category._base)}
-                      className="flex w-full items-center gap-2 rounded-lg data-[focus]:bg-white/20 tracking-wide"
-                    >
-                      {category?.name}
-                    </span>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+      {/* Category navigation */}
+      <div className="bg-darkText text-white shadow-sm">
+        <Container className="flex items-center overflow-hidden py-5">
+          <DropdownMenu>
+            <DropdownMenuTrigger className=" px-4 flex items-center gap-2 text-white hover:bg-darkText/80 transition-colors focus:outline-none">
+              <span>Categories</span>
+              <FaAngleDown className="text-sm" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="min-w-48">
+              {categories.map((category) => (
+                <DropdownMenuItem
+                  key={category._id}
+                  className="py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleCategoryClick(category._base)}
+                >
+                  {category?.name}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
+          <div className="hidden md:flex items-center space-x-6 ml-6">
             {bottomNavigation.map((nav) => (
               <Link
-                className="uppercase hidden md:inline-flex text-sm font-semibold text-whiteText/90 hover:text-whiteText duration-200 relative hover:underline hover:transition-shadow cursor-pointer"
                 key={nav.link}
                 to={nav.link}
+                className="text-sm font-medium text-white/90 hover:text-white transition-colors"
               >
                 {nav.title}
               </Link>
             ))}
-          </Container>
-        </div>
-      </header>
-    </>
+          </div>
+
+          {/* Mobile search button */}
+          <div className="md:hidden ml-auto">
+            <button className="p-2 text-white">
+              <IoSearchOutline className="text-xl" />
+            </button>
+          </div>
+        </Container>
+      </div>
+    </header>
   );
 }
