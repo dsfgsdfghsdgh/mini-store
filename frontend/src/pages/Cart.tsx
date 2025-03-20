@@ -112,7 +112,7 @@ const Cart = () => {
                 </div>
               </dl>
 
-              <CheckoutBtn products={cartProduct} />
+              <CheckoutBtn items={cartProduct} />
             </section>
           </div>
         </>

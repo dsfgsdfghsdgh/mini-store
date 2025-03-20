@@ -1,41 +1,24 @@
-import { checkoutServiceRequest } from "@/common/lib/apiEndpoint";
 import { ProductProps } from "@/common/types/types";
-import API from "@/config/apiConfig";
-import stripe from "@/config/stripe";
+import { checkoutService } from "@/store/checkout/checkoutSlice";
 import { resetCart } from "@/store/features/cartSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
-import { useState } from "react";
+import toast from "react-hot-toast";
 
-const CheckoutBtn = ({ products }: { products: ProductProps[] }) => {
+const CheckoutBtn = ({ items }: { items: ProductProps[] }) => {
   const { user } = useTypedSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(false);
+  const { error, isLoading } = useTypedSelector((state) => state.checkout);
 
   const handleCheckout = async () => {
-    if (loading) return; // Prevent multiple clicks
-    setLoading(true);
-
-    try {
-      const response = await API.post(checkoutServiceRequest, {
-        products,
-        email: user?.email,
-      });
-
-      const sessionId = response.data?.data?.stripeSessionId;
-
-      if (!sessionId) throw new Error("Invalid session ID");
-
-      const result = await stripe?.redirectToCheckout({ sessionId });
-
-      if (result?.error) {
-        console.error("Stripe Error:", result.error.message);
-      } else {
-        dispatch(resetCart());
-      }
-    } catch (error) {
-      console.error("Checkout Error:", error);
-    } finally {
-      setLoading(false);
+    await dispatch(
+      checkoutService({ email: user?.email as string, products: items })
+    );
+    if (error) {
+      toast.error("Failed to checkout");
+    }
+    if (!error && !isLoading) {
+      dispatch(resetCart());
+      toast.success("Order checkout completed");
     }
   };
 
@@ -45,16 +28,16 @@ const CheckoutBtn = ({ products }: { products: ProductProps[] }) => {
         <button
           onClick={handleCheckout}
           type="button"
-          disabled={loading}
+          disabled={isLoading}
           className={`w-full rounded-md px-4 py-3 text-base font-medium text-white shadow-sm 
           duration-200 focus:outline-none focus:ring-2 focus:ring-skyText focus:ring-offset-2 
           focus:ring-offset-gray-50 ${
-            loading
+            isLoading
               ? "bg-gray-600 cursor-not-allowed"
               : "bg-gray-800 hover:bg-black"
           }`}
         >
-          {loading ? "Processing..." : "Checkout"}
+          {isLoading ? "Processing..." : "Checkout"}
         </button>
       ) : (
         <>
