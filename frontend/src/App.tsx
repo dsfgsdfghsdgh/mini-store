@@ -17,6 +17,7 @@ import Favorite from "./pages/Favorite";
 import Profile from "./pages/Profile";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import Orders from "./pages/Orders";
 
 function App() {
   const { isAuthenticated, isLoading } = useTypedSelector(
@@ -49,6 +50,7 @@ function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="favorite" element={<Favorite />} />
           <Route path="user" element={<Profile />} />
+          <Route path="orders" element={<Orders />} />
 
           {/* Public Routes */}
           <Route path="sign-up" element={<SignUp />} />

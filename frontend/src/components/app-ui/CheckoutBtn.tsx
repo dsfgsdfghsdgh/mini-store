@@ -1,5 +1,5 @@
 import { ProductProps } from "@/common/types/types";
-import { checkoutService } from "@/store/checkout/checkoutSlice";
+import { checkoutService } from "@/store/features/checkoutSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import toast from "react-hot-toast";
 

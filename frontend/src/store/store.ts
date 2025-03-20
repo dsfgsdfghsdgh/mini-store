@@ -3,7 +3,7 @@ import authReducer from "./auth/authSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import cartReducer from "./features/cartSlice";
 import favoriteReducer from "./features/favoriteSlice";
-import checkoutReducer from "./checkout/checkoutSlice";
+import checkoutReducer from "./features/checkoutSlice";
 
 const store = configureStore({
   reducer: {
