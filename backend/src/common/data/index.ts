@@ -92,16 +92,16 @@ export const highlightsProducts = [
     buttonTitle: "Browse Deals",
     image: `${uri}/newProduct.jpg`,
     _base: "/product",
-    color: "#000000",
+    color: "#fff",
   },
   {
     _id: 3002,
     name: "I Phone 14 Pro Max Out",
     title: "From $800.00",
     buttonTitle: "Shop Cellphone",
-    image: `${uri}/iphone12.jpg`,
+    image: `${uri}/iphone15.jpg`,
     _base: "/category/cellPhones",
-    color: "#ggg",
+    color: "#fff",
   },
   {
     _id: 3003,
@@ -110,7 +110,7 @@ export const highlightsProducts = [
     buttonTitle: "Shop Now",
     image: `${uri}/powerBank.jpg`,
     _base: "/product",
-    color: "#000000",
+    color: "#fff",
   },
 ];
 

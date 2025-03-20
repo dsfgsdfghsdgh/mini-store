@@ -10,7 +10,7 @@ export default function Container({ children, className }: ContainerProps) {
   return (
     <div
       className={mergedefaultCss(
-        "max-w-screen-xl mx-auto py-10 px-4 md:px-0",
+        "w-full max-w-[92vw] md:max-w-[90vw] lg:max-w-[85vw] xl:max-w-[1280px] mx-auto py-10 px-6",
         className
       )}
     >

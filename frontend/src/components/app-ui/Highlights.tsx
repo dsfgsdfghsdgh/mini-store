@@ -3,7 +3,7 @@ import { getHighlightsRequest } from "@/common/lib/apiEndpoint";
 import { useEffect, useState } from "react";
 import Container from "./Container";
 import { HighlightsType } from "@/common/types/types";
-import { Link } from "react-router-dom";
+import LinkButton from "./LinkButton";
 
 type HighlightProps = {
   message: string;
@@ -53,9 +53,9 @@ const Highlights = () => {
               <h3 className="text-2xl font-bold max-w-44">{item?.name}</h3>
               <p className="text-base font-bold mt-4">{item?.title}</p>
             </div>
-            <Link to={item?._base || "#"} className="text-base font-normal hover:underline">
+            <LinkButton to={item?._base || "#"} className="text-base font-normal hover:underline max-w-max bg-black ">
               {item?.buttonTitle || "Learn More"}
-            </Link>
+            </LinkButton>
           </div>
         </div>
       ))}

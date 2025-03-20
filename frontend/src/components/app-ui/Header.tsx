@@ -63,7 +63,7 @@ export default function Header() {
     >
       {/* Main header section */}
       <div className="bg-white border-b">
-        <Container className="md:h-14 h-10 flex items-center justify-between py-2">
+        <Container className="md:h-15 h-13 flex items-center justify-between py-2">
           {/* Text logo instead of image */}
           <div
             onClick={() => navigate("/")}
@@ -144,7 +144,7 @@ export default function Header() {
 
       {/* Category navigation */}
       <div className="bg-darkText text-white shadow-sm">
-        <Container className="flex items-center overflow-hidden py-5">
+        <Container className="flex items-center overflow-hidden md:py-5 py-4 ">
           <DropdownMenu>
             <DropdownMenuTrigger className=" px-4 flex items-center gap-2 text-white hover:bg-darkText/80 transition-colors focus:outline-none">
               <span>Categories</span>

@@ -4,25 +4,32 @@ import LinkButton from "./LinkButton";
 
 const HomeBanner = () => {
   return (
-    <Container className="relative py-5 overflow-hidden">
-      <div className="relative">
+    <Container className="relative py-10 overflow-hidden">
+      {/* Banner Image with Overlay */}
+      <div className="relative w-full h-[250px] md:h-[350px] lg:h-[450px]">
         <img
           src={homeBanner}
-          alt="homeBanner"
-          className="w-full h-full object-cover rounded-md"
+          alt="Home Banner"
+          className="w-full h-full object-cover rounded-xl"
         />
-        <div className="w-full h-full absolute top-0 left-0 bg-black/10" />
+        <div className="absolute inset-0 bg-black/30 rounded-xl" />
       </div>
-      <div className="absolute inset-0 flex flex-col justify-center px-10">
-        <h2 className="text-xl md:text-4xl lg:text-6xl text-whiteText font-bold">
-          Mi Air Purifier
+
+      {/* Banner Content */}
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6 md:px-12">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl text-white font-bold leading-tight">
+          Explore Our Newly Launched Product
         </h2>
-        <p className="text-base md:text-lg font-semibold leading-6 text-whiteText/90 max-w-[250px] mt-4">
-          The new tech gift you are wishing for right here.
+        <p className="text-sm md:text-lg font-medium text-white/90 max-w-md mt-3">
+          The new tech gift you&apos;ve been wishing for is right here.
         </p>
-        <LinkButton 
-        
-        className="w-44 flex items-center justify-center bg-whiteText text-darkText hover:bg-darkText hover:text-whiteText duration-200 mt-4" />
+
+        {/* Button */}
+        <LinkButton
+          className="mt-5 px-6 py-3 text-sm md:text-base font-semibold bg-white text-darkText rounded-md shadow-md hover:bg-darkText hover:text-white transition-all duration-300"
+        >
+          Shop Now
+        </LinkButton>
       </div>
     </Container>
   );
