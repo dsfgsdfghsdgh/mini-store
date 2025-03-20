@@ -7,10 +7,12 @@ import { stripe } from "../../config/stripe";
 import { CLIENT_URI } from "../../constants/getEnv";
 import { INTERNAL_SERVER_ERROR } from "../../constants/httpCode";
 import appAssert from "../../middlewares/appAssert.middleware";
+import { addOrderService } from "./order.service";
 
 type checkoutServiceProps = {
   products: ProductType[];
   email: string;
+  userId: string;
 };
 
 export const checkoutService = async (data: checkoutServiceProps) => {
@@ -49,6 +51,21 @@ export const checkoutService = async (data: checkoutServiceProps) => {
   });
 
   appAssert(stripeSession, INTERNAL_SERVER_ERROR, "Error in Stripe session");
+
+  const totalAmount = data.products.reduce(
+    (acc, p) => acc + p.discountedPrice * p.quantity,
+    0
+  );
+
+  const order = await addOrderService({
+    userId: data.userId,
+    totalAmount: String(totalAmount),
+    paymentMethod: "stripe",
+    paymentId: stripeSession.id,
+    orderItems: data.products,
+  });
+
+  appAssert(order, INTERNAL_SERVER_ERROR, "Error adding order");
 
   return {
     stripeSessionId: stripeSession.id,

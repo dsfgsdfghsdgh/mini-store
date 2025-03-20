@@ -8,6 +8,7 @@ export const checkoutHandle = asyncHandler(async (req, res) => {
     email: req.body.email,
   });
   const { stripeSessionId } = await checkoutService({
+    userId: req.userId as string,
     email: body.email,
     products: body.products,
   });
