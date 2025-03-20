@@ -5,6 +5,10 @@
 // import Container from "@/components/app-ui/Container";
 // import FormattedPrice from "@/components/app-ui/FormattedPrice";
 
+import { orderService } from "@/store/features/orderSlice";
+import { useAppDispatch, useTypedSelector } from "@/store/store";
+import { useEffect } from "react";
+
 // const hardcodedOrders = [
 //   {
 //     paymentId: "PAY1234567890",
@@ -103,11 +107,13 @@
 
 // export default Orders;
 
-
 export default function Orders() {
-  return (
-    <div>
-      
-    </div>
-  )
+  const dispatch = useAppDispatch();
+  const date = useTypedSelector((state) => state.order.data);
+  useEffect(() => {
+    dispatch(orderService());
+  }, [dispatch]);
+  console.log("datae", date);
+
+  return <div>retre</div>;
 }

@@ -45,7 +45,7 @@ export interface BlogProps {
 
 export interface UserTypes {
   avatar?: string;
-  createAt:string;
+  createAt: string;
   email: string;
   id: string;
   updatedAt?: string;
@@ -56,8 +56,12 @@ export interface UserTypes {
 }
 
 export interface OrderTypes {
-  orderItems: [ProductProps];
+  createdAt: string;
+  id: string;
+  orderItems: ProductProps[];
   paymentId: string;
-  paymentMethod: string;
-  userEmail: string;
+  paymentMethod:string;
+  status:string;
+  totalAmount: string;
+  userId: string;
 }

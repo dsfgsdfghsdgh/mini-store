@@ -9,13 +9,17 @@ export const addOrderHandle = asyncHandler(async (req, res) => {
     ...body,
     userId: req?.userId as string,
   });
-  res.status(200).json({ message: "Order added successfully", data: order });
+  res
+    .status(200)
+    .json({ message: "Order added successfully", data: order, success: true });
 });
 
 export const getOrders = asyncHandler(async (req, res) => {
   const { userId } = req;
   const orders = await getOrdersService(userId as string);
-  res
-    .status(200)
-    .json({ message: "Orders fetched successfully", data: orders });
+  res.status(200).json({
+    message: "Orders fetched successfully",
+    data: orders.orders,
+    success: true,
+  });
 });

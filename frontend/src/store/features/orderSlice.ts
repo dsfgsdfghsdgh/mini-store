@@ -1,29 +1,31 @@
 import { getOrdersRequest } from "@/common/lib/apiEndpoint";
+import { OrderTypes } from "@/common/types/types";
 import API from "@/config/apiConfig";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
-export const orderService = createAsyncThunk(
-  "order/process",
-  async () => {
-    try {
-      const response = await API.get(getOrdersRequest);
+type OrderData = {
+  message: string;
+  data: OrderTypes[];
+  success: boolean;
+};
 
-      if (!response) {
-        toast.error("order not found");
-        return;
-      }
-
-      return response.data; // Success
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      toast.error(error.message || "error in getting orders");
+export const orderService = createAsyncThunk("order/process", async () => {
+  try {
+    const response: OrderData = await API.get(getOrdersRequest);
+    if (response?.success === false) {
+      toast.error("order not found");
+      return;
     }
+    return response.data; // Success
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    toast.error(error.message || "error in getting orders");
   }
-);
+});
 
 type InitialStateType = {
-  data: object
+  data: object;
   isLoading: boolean;
   error: string | null;
 };
@@ -47,7 +49,7 @@ const orderSlice = createSlice({
       })
       .addCase(orderService.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload;
+        state.data = action.payload || {};
       })
       .addCase(orderService.rejected, (state, action) => {
         state.isLoading = false;
