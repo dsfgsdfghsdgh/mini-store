@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography"; 
+@plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
 
 @plugin "tailwindcss-animate";
@@ -78,7 +78,6 @@
 }
 
 @theme inline {
-
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -119,8 +118,8 @@
   --color-darkText: #000000;
   --color-lightText: #9b9b9b;
   --color-greenText: #1d8221;
-  --color-redText: #E02B2B;
-  --color-skyText: #32BDE8;
+  --color-redText: #e02b2b;
+  --color-skyText: #32bde8;
 
   /* flex */
   --flex-full: 0 0 100%;
@@ -129,6 +128,9 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
   }
   body {
     @apply bg-background text-foreground;

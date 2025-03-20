@@ -1,10 +1,10 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/common/Home";
 import { RootLayout } from "./components/layout/MainLayout";
-import NotFound from "./pages/NotFound";
-import Category from "./pages/Category";
-import ProductById from "./pages/ProductById";
-import Products from "./pages/Product";
+import NotFound from "./pages/common/NotFound";
+import Category from "./pages/product/Category";
+import ProductById from "./pages/product/ProductById";
+import Products from "./pages/product/Product";
 import SignUp from "./pages/auth/SignUpPage";
 import LoginPage from "./pages/auth/LoginPage";
 import { CheckAuth } from "./components/layout/CheckAuth";
@@ -12,12 +12,12 @@ import { useAppDispatch, useTypedSelector } from "./store/store";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth/authSlice";
 import Loading from "./components/app-ui/Loading";
-import Cart from "./pages/Cart";
-import Favorite from "./pages/Favorite";
-import Profile from "./pages/Profile";
-import Success from "./pages/Success";
-import Cancel from "./pages/Cancel";
-import Orders from "./pages/Orders";
+import Cart from "./pages/user/Cart";
+import Favorite from "./pages/user/Favorite";
+import Profile from "./pages/user/Profile";
+import Success from "./pages/payment/Success";
+import Cancel from "./pages/payment/Cancel";
+import Orders from "./pages/user/Orders";
 
 function App() {
   const { isAuthenticated, isLoading } = useTypedSelector(
