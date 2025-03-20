@@ -1,6 +1,5 @@
 import { ProductProps } from "@/common/types/types";
 import { checkoutService } from "@/store/checkout/checkoutSlice";
-import { resetCart } from "@/store/features/cartSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import toast from "react-hot-toast";
 
@@ -17,7 +16,6 @@ const CheckoutBtn = ({ items }: { items: ProductProps[] }) => {
       toast.error("Failed to checkout");
     }
     if (!error && !isLoading) {
-      dispatch(resetCart());
       toast.success("Order checkout completed");
     }
   };

@@ -7,6 +7,7 @@ import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { FaRegEye } from "react-icons/fa";
 import { LuArrowLeftRight } from "react-icons/lu";
 import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
+import toast from "react-hot-toast";
 
 type ProductPropsForNav = {
   item: ProductProps;
@@ -21,8 +22,14 @@ const ProductCardSideNav = ({ item }: ProductPropsForNav) => {
     const exists = favoriteProducts.find((p) => p._id === item._id);
     if (exists) {
       dispatch(removeFromFavorite(item));
+      toast.success(
+        `${item.name.substring(0, 10)} has been removed from favorites`
+      );
     } else {
       dispatch(addToFavorite(item));
+      toast.success(
+        `${item.name.substring(0, 10)} has been added to favorites`
+      );
     }
   };
 

@@ -4,7 +4,11 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import PriceTag from "./PriceTag";
 import { ProductProps } from "@/common/types/types";
 import { useTypedSelector, useAppDispatch } from "@/store/store";
-import { addToCart,DecQuantityByOne, removeFromCart  } from "@/store/features/cartSlice";
+import {
+  addToCart,
+  DecQuantityByOne,
+  removeFromCart,
+} from "@/store/features/cartSlice";
 import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
 
 const AddToCartBtn = ({
@@ -18,7 +22,7 @@ const AddToCartBtn = ({
   product: ProductProps;
   showPrice?: boolean;
 }) => {
-  const dispatch = useAppDispatch(); 
+  const dispatch = useAppDispatch();
   const [existingProduct, setExistingProduct] = useState<ProductProps | null>(
     null
   );
@@ -42,17 +46,16 @@ const AddToCartBtn = ({
   };
 
   const handleDecQuantity = () => {
-    if(existingProduct){
-      if(existingProduct?.quantity > 1){
+    if (existingProduct) {
+      if (existingProduct?.quantity > 1) {
         dispatch(DecQuantityByOne(product));
-      }else {
+        toast.success("Quantity decreased by 1 successfully!");
+      } else {
         dispatch(removeFromCart(product));
-        toast.error("Cart is empty, please add product to cart!");
+        toast.error(`${product.name.substring(0, 10)} has been removed`);
       }
     }
-  }
-
-
+  };
 
   const newClassName = mergedefaultCss(
     "bg-[#f7f7f7] uppercase text-xs py-3 text-center rounded-full font-semibold hover:bg-black hover:text-white hover:scale-105 duration-200 cursor-pointer",

@@ -2,19 +2,24 @@ import { useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { FiCheckCircle } from "react-icons/fi";
 import Container from "@/components/app-ui/Container";
+import { useAppDispatch } from "@/store/store";
+import { resetCart } from "@/store/features/cartSlice";
 
 const Success = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const sessionId = new URLSearchParams(location.search).get("session_id");
   const exp = new URLSearchParams(location.search).get("exp");
+  const dispatch = useAppDispatch();
+
   const isValid = Date.now() <= Number(exp || "0");
 
   useEffect(() => {
     if (!sessionId || !isValid) {
       navigate("/", { replace: true });
     }
-  }, [sessionId, navigate, isValid]);
+    dispatch(resetCart());
+  }, [sessionId, navigate, isValid, dispatch]);
 
   return (
     <Container className="justify-center flex">

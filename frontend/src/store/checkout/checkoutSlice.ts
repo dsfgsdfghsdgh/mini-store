@@ -22,14 +22,12 @@ export const checkoutService = createAsyncThunk(
       });
 
       if (result?.error) {
-        console.error("Stripe Error:", result.error);
         return rejectWithValue(result.error.message);
       }
 
       return data; // Success
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error("Checkout Error:", error);
       return rejectWithValue(
         error.response?.data?.message || "Checkout failed"
       );
