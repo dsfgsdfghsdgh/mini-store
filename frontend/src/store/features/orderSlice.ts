@@ -4,20 +4,14 @@ import API from "@/config/apiConfig";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
-type OrderData = {
-  message: string;
-  data: OrderTypes[];
-  success: boolean;
-};
-
 export const orderService = createAsyncThunk("order/process", async () => {
   try {
-    const response: OrderData = await API.get(getOrdersRequest);
-    if (response?.success === false) {
+    const response = await API.get(getOrdersRequest);
+    if (response.data?.success === false) {
       toast.error("order not found");
       return;
     }
-    return response.data; // Success
+    return response.data.data; // Success
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     toast.error(error.message || "error in getting orders");
@@ -25,13 +19,13 @@ export const orderService = createAsyncThunk("order/process", async () => {
 });
 
 type InitialStateType = {
-  data: object;
+  data: OrderTypes[] | [];
   isLoading: boolean;
   error: string | null;
 };
 
 const initialState: InitialStateType = {
-  data: {},
+  data: [],
   isLoading: false,
   error: null,
 };
@@ -49,7 +43,7 @@ const orderSlice = createSlice({
       })
       .addCase(orderService.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload || {};
+        state.data = action.payload || [];
       })
       .addCase(orderService.rejected, (state, action) => {
         state.isLoading = false;

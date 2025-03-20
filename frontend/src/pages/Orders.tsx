@@ -1,119 +1,112 @@
-// import { Accordion, AccordionItem } from "@/components/ui/accordion";
-// import { Card } from "@/components/ui/card";
-// import { Button } from "@/components/ui/button";
-// import { Link } from "react-router-dom";
-// import Container from "@/components/app-ui/Container";
-// import FormattedPrice from "@/components/app-ui/FormattedPrice";
-
+import Container from "@/components/app-ui/Container";
+import Loading from "@/components/app-ui/Loading";
 import { orderService } from "@/store/features/orderSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
+import { format } from "date-fns";
 import { useEffect } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import Badge from "@/components/app-ui/Badge";
 
-// const hardcodedOrders = [
-//   {
-//     paymentId: "PAY1234567890",
-//     orderItems: [
-//       {
-//         _id: "1",
-//         name: "Wireless Headphones",
-//         description: "Noise-canceling Bluetooth headphones",
-//         quantity: 2,
-//         discountedPrice: 100,
-//         images: ["/images/headphones.jpg"],
-//       },
-//       {
-//         _id: "2",
-//         name: "Smart Watch",
-//         description: "Water-resistant with heart-rate monitoring",
-//         quantity: 1,
-//         discountedPrice: 150,
-//         images: ["/images/smartwatch.jpg"],
-//       },
-//     ],
-//   },
-// ];
-
-// const Orders = () => {
-//   return (
-//     <Container>
-//       {hardcodedOrders.length > 0 ? (
-//         <div className="max-w-5xl mx-auto">
-//           <h2 className="text-2xl font-bold mt-1">Customer Order Details</h2>
-//           <p className="text-gray-600">
-//             Total Orders: {hardcodedOrders.length}
-//           </p>
-
-//           <div className="space-y-6 divide-y divide-gray-200">
-//             <Accordion type="single" collapsible>
-//               {hardcodedOrders.map((order) => {
-//                 const totalAmt = order.orderItems.reduce(
-//                   (acc, item) => acc + item.discountedPrice * item.quantity,
-//                   0
-//                 );
-
-//                 return (
-//                   <AccordionItem key={order.paymentId} value={order.paymentId}>
-//                     <Card className="p-4">
-//                       <h3 className="text-lg font-semibold">
-//                         Tracking Number: {order.paymentId}
-//                       </h3>
-//                       <p>
-//                         Order Amount: <FormattedPrice amount={totalAmt} />
-//                       </p>
-//                       <div className="mt-4">
-//                         {order.orderItems.map((item) => (
-//                           <div
-//                             key={item._id}
-//                             className="flex gap-4 border-b pb-3"
-//                           >
-//                             <img
-//                               src={item.images[0]}
-//                               alt={item.name}
-//                               className="w-20 h-20 object-cover rounded-md"
-//                             />
-//                             <div>
-//                               <h4 className="font-medium">{item.name}</h4>
-//                               <p className="text-gray-600 text-sm">
-//                                 {item.description}
-//                               </p>
-//                               <p>Quantity: {item.quantity}</p>
-//                               <p className="font-bold">
-//                                 Price:{" "}
-//                                 <FormattedPrice amount={item.discountedPrice} />
-//                               </p>
-//                             </div>
-//                           </div>
-//                         ))}
-//                       </div>
-//                     </Card>
-//                   </AccordionItem>
-//                 );
-//               })}
-//             </Accordion>
-//           </div>
-//         </div>
-//       ) : (
-//         <div className="flex flex-col items-center text-center">
-//           <p className="text-2xl font-semibold">No orders yet</p>
-//           <p>You haven't made any purchases yet.</p>
-//           <Button asChild>
-//             <Link to="/product">Go to Shopping</Link>
-//           </Button>
-//         </div>
-//       )}
-//     </Container>
-//   );
-// };
-
-// export default Orders;
-
-export default function Orders() {
+const Order = () => {
+  const {
+    data: orders,
+    isLoading,
+    error,
+  } = useTypedSelector((state) => state.order);
   const dispatch = useAppDispatch();
-  const date = useTypedSelector((state) => state.order.data);
+
   useEffect(() => {
     dispatch(orderService());
   }, [dispatch]);
-  console.log("datae", date);
 
-  return <div>retre</div>;
-}
+  if (isLoading) {
+    return (
+      <Container className="flex justify-center items-center h-screen">
+        <Loading />
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="flex justify-center items-center h-screen text-red-500">
+        {error}
+      </Container>
+    );
+  }
+
+  return (
+    <Container className="py-10 px-4">
+      <h2 className="text-2xl font-semibold py-5 text-center">
+        🛒 Your Orders
+      </h2>
+
+      {orders && orders.length > 0 ? (
+        <Accordion type="multiple" className="space-y-4 ">
+          {orders.map((order) => (
+            <AccordionItem
+              key={order.id}
+              value={order.id}
+              className="border rounded-lg bg-white shadow-sm relative"
+            >
+              <AccordionTrigger className="px-4 flex justify-between items-center w-full hover:no-underline cursor-pointer ">
+                <div>
+                  <h3 className="text-lg font-semibold">Order #{order.id}</h3>
+                  <p className="text-sm text-gray-500">
+                    Placed on {format(new Date(order.createdAt), "PPP")}
+                  </p>
+                </div>
+                <Badge
+                  label="Completed"
+                  variant="success"
+                />
+              </AccordionTrigger>
+
+              <AccordionContent className="p-4 border-t">
+                <div className="space-y-3">
+                  {order.orderItems.map((item) => (
+                    <div
+                      key={item._id}
+                      className="flex flex-col md:flex-row md:items-center gap-4 border-b pb-3"
+                    >
+                      <img
+                        src={item.images?.[0]}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                      <div className="flex-1">
+                        <p className="font-medium">{item.name}</p>
+                        <p className="text-sm text-gray-500">
+                          Qty: {item.quantity}
+                        </p>
+                      </div>
+                      <p className="font-semibold">₹{item.discountedPrice}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+                  <p className="font-semibold text-lg">
+                    Total: ₹{order.totalAmount}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Payment: {order.paymentMethod}
+                  </p>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      ) : (
+        <p className="text-center text-gray-500">No orders found.</p>
+      )}
+    </Container>
+  );
+};
+
+export default Order;
