@@ -93,14 +93,14 @@ const Order = () => {
                             Qty: {item.quantity}
                           </p>
                         </div>
-                        <p className="font-semibold">₹{item.discountedPrice}</p>
+                        <p className="font-semibold">${item.discountedPrice}</p>
                       </div>
                     ))}
                   </div>
 
                   <div className="mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                     <p className="font-semibold text-lg">
-                      Total: ₹{order.totalAmount}
+                      Total: ${order.totalAmount}
                     </p>
                     <p className="text-sm text-gray-600">
                       Payment: {order.paymentMethod}

@@ -17,7 +17,9 @@ export const checkoutService = createAsyncThunk(
       });
       const data = response.data;
 
-      const result = await stripe?.redirectToCheckout({
+      const stripePromise = await stripe;
+
+      const result = await stripePromise?.redirectToCheckout({
         sessionId: data.data.stripeSessionId,
       });
 
