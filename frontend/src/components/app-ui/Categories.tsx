@@ -48,6 +48,7 @@ const Categories = () => {
             className="w-full h-auto relative group overflow-hidden flex justify-center"
           >
             <img
+            draggable="false"
               src={item?.image}
               alt="categoryImage"
               className="w-2/3 h-4/5 object-cover rounded-md group-hover:scale-110 duration-300"

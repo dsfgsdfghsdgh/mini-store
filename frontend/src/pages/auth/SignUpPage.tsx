@@ -147,6 +147,7 @@ export default function SignupPage() {
                     {avatarPreview && (
                       <div className="mt-2">
                         <img
+                        draggable="false"
                           src={avatarPreview}
                           alt="Profile Preview"
                           className="w-16 h-16 rounded-full object-cover"

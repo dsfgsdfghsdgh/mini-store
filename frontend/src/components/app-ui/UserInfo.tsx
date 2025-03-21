@@ -21,6 +21,7 @@ const UserInfo = ({ user }: UserInfoProps) => {
       <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-12 md:px-16 lg:px-20">
         <div className="flex flex-col items-center text-center sm:flex-row sm:text-left sm:items-center gap-6 sm:gap-10">
           <img
+          draggable="false"
             src={
               user?.avatar
                 ? user.avatar

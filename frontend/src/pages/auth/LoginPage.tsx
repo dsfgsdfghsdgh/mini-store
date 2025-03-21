@@ -54,6 +54,7 @@ export default function LoginPage() {
         {/* Left Side - Illustration */}
         <div className="hidden md:flex justify-center items-center bg-gray-100 p-8">
           <img
+          
             src={signupImage}
             alt="Signup Illustration"
             className="max-w-xs"

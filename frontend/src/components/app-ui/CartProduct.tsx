@@ -21,6 +21,7 @@ const CartProduct = ({ product }: { product: ProductProps }) => {
     <div className="flex py-6 sm:py-10">
       <Link to={`/product/${product?._id}`}>
         <img
+        draggable="false"
           src={product?.images[0]}
           alt="productImage"
           className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48 border border-skyText/30 hover:border-skyText duration-300"

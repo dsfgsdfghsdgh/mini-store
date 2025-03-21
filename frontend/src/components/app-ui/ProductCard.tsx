@@ -52,6 +52,7 @@ const ProductCard = ({ item }: Props) => {
         className="relative w-full h-64 overflow-hidden cursor-pointer"
       >
         <img
+        draggable="false"
           src={item?.images[0]}
           alt={item?.name || "Product image"}
           className={`w-full h-full object-contain transition-transform duration-500 ${

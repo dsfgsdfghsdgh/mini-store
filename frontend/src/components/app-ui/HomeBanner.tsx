@@ -8,6 +8,7 @@ const HomeBanner = () => {
       {/* Banner Image with Overlay */}
       <div className="relative w-full h-[250px] md:h-[350px] lg:h-[450px]">
         <img
+        draggable="false"
           src={homeBanner}
           alt="Home Banner"
           className="w-full h-full object-cover rounded-xl"

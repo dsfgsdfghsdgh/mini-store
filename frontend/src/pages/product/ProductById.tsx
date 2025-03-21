@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import _ from "lodash";
 import { ProductProps } from "@/common/types/types";
-import { getProductByIdRequest, getProductRequest } from "@/common/lib/apiEndpoint";
+import {
+  getProductByIdRequest,
+  getProductRequest,
+} from "@/common/lib/apiEndpoint";
 import { getData } from "@/config/apiConfig";
 import Loading from "@/components/app-ui/Loading";
 import Container from "@/components/app-ui/Container";
-import { MdOutlineStarOutline } from "react-icons/md";
+import { MdOutlineStarOutline, MdStar } from "react-icons/md";
 import PriceTag from "@/components/app-ui/PriceTag";
 import { FaRegEye } from "react-icons/fa";
 import FormattedPrice from "@/components/app-ui/FormattedPrice";
@@ -57,6 +60,21 @@ const ProductById = () => {
     fetchData();
   }, [id, endpoint]);
 
+  const renderStars = (rating = 0) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+
+    for (let i = 0; i < 5; i++) {
+      if (i < fullStars) {
+        stars.push(<MdStar key={i} className="text-yellow-400" />);
+      } else {
+        stars.push(<MdOutlineStarOutline key={i} className="text-gray-300" />);
+      }
+    }
+
+    return stars;
+  };
+
   useEffect(() => {
     if (productData) {
       setImgUrl(productData?.images[0]);
@@ -77,6 +95,7 @@ const ProductById = () => {
                 <div className="flex flex-col gap-2">
                   {productData?.images?.map((item, index) => (
                     <img
+                    draggable="false"
                       src={item}
                       alt="img"
                       key={index}
@@ -91,6 +110,7 @@ const ProductById = () => {
                 </div>
                 <div className="overflow-hidden rounded-4xl  h-9/12 w-9/12 ">
                   <img
+                  draggable="false"
                     src={imgUrl}
                     alt="mainImage"
                     className="h-full w-full transition-transform hover:scale-105 object-contain"
@@ -110,12 +130,8 @@ const ProductById = () => {
                     className="text-xl text-gray-700"
                   />
                   <div className="flex items-center gap-2">
-                    <div className="text-lg text-yellow-500 flex">
-                      <MdOutlineStarOutline />
-                      <MdOutlineStarOutline />
-                      <MdOutlineStarOutline />
-                      <MdOutlineStarOutline />
-                      <MdOutlineStarOutline />
+                    <div className="flex items-center text-lg">
+                      {renderStars(productData?.rating || 0)}
                     </div>
                     <p className="text-base font-semibold text-gray-700">
                       ({productData?.reviews} reviews)
@@ -197,6 +213,7 @@ const ProductById = () => {
 
                 <div className="bg-gray-100 p-5 rounded-md flex flex-col items-center justify-center gap-2">
                   <img
+                  draggable="false"
                     src={productPayment}
                     alt="payment"
                     className="w-auto object-cover"

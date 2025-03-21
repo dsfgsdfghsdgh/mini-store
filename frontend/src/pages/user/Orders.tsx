@@ -82,6 +82,7 @@ const Order = () => {
                         className="flex flex-col sm:flex-row sm:items-center gap-4 border-b pb-3"
                       >
                         <img
+                          draggable="false"
                           src={item.images?.[0]}
                           alt={item.name}
                           className="w-20 h-20 object-cover rounded-md"

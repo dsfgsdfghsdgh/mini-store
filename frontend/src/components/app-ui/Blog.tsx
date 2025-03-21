@@ -5,7 +5,6 @@ import { getData } from "@/config/apiConfig";
 import { getBlogRequest } from "@/common/lib/apiEndpoint";
 import { BlogProps } from "@/common/types/types";
 
-
 type BlogData = {
   message: string;
   data: BlogProps[];
@@ -16,7 +15,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data:BlogData = await getData(getBlogRequest);
+        const data: BlogData = await getData(getBlogRequest);
         setBlogsData(data.data);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -33,6 +32,7 @@ const Blog = () => {
           <div key={item?._id} className="group cursor-pointer">
             <div className="overflow-hidden">
               <img
+                draggable="false"
                 src={item?.image}
                 alt="blogImage"
                 className="w-full h-44 object-cover group-hover:scale-110 duration-300"

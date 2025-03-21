@@ -22,6 +22,7 @@ const FooterTop = () => {
               <div className=" sm:flex-shrink-0">
                 <div className="flex-root">
                   <img
+                  draggable="false"
                     src={item?.imageSrc}
                     alt="image"
                     className="mx-auto h-16 w-16"

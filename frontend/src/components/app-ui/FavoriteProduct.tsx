@@ -57,6 +57,7 @@ const FavoriteProduct = ({ product }: { product: ProductProps }) => {
         className="ml-4 flex-shrink-0 h-20 w-20 sm:w-40 sm:h-40 sm:order-first sm:m-0 sm:mr-6 border border-gray-200 rounded-md hover:border-skyText duration-200 cursor-pointer group overflow-hidden"
       >
         <img
+        draggable="false"
           src={product?.images[0]}
           alt="productImage"
           className="h-full w-full rounded-lg object-cover object-center group-hover:scale-110 duration-200"
