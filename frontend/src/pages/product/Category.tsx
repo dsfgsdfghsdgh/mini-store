@@ -5,14 +5,13 @@ import ProductCard from "@/components/app-ui/ProductCard";
 import { getData } from "@/config/apiConfig";
 import { getCategoryProductByIdRequest } from "@/common/lib/apiEndpoint";
 import { ProductProps } from "@/common/types/types";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 
 type ProductDate = {
   message: string;
   data: ProductProps[];
-}
+};
 
 const Category = () => {
   const { id } = useParams();
@@ -22,7 +21,9 @@ const Category = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data: ProductDate = await getData(getCategoryProductByIdRequest(id|| ""));
+        const data: ProductDate = await getData(
+          getCategoryProductByIdRequest(id || "")
+        );
         setProducts(data.data);
       } catch (error) {
         console.error("Error fetching data", error);

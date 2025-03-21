@@ -5,6 +5,7 @@ import cartReducer from "./features/cartSlice";
 import favoriteReducer from "./features/favoriteSlice";
 import checkoutReducer from "./features/checkoutSlice";
 import orderReducer from "./features/orderSlice";
+import productReducer from "./features/productSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
     cart: cartReducer,
     favorite: favoriteReducer,
     checkout: checkoutReducer,
-    order: orderReducer
+    order: orderReducer,
+    products : productReducer
   },
 });
 

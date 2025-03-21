@@ -52,7 +52,7 @@ const AddToCartBtn = ({
         toast.success("Quantity decreased by 1 successfully!");
       } else {
         dispatch(removeFromCart(product));
-        toast.error(`${product.name.substring(0, 10)} has been removed`);
+        toast.success(`${product.name.substring(0, 10)} has been removed`);
       }
     }
   };

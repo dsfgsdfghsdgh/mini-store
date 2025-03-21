@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
 import { loginSchema } from "@/common/schemas/auth";
 import Container from "@/components/app-ui/Container";
 import { signupImage } from "@/assets";
@@ -20,7 +19,6 @@ import { loginUser } from "@/store/auth/authSlice";
 import toast from "react-hot-toast";
 
 export default function LoginPage() {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading } = useTypedSelector((state) => state.auth);
 
@@ -42,7 +40,6 @@ export default function LoginPage() {
 
     if (loginUser.fulfilled.match(response)) {
       toast.success("Login successful!");
-      setTimeout(() => navigate("/"), 1500);
     } else if (loginUser.rejected.match(response)) {
       toast.error("Login failed. Please check your credentials and try again.");
     }
@@ -54,7 +51,6 @@ export default function LoginPage() {
         {/* Left Side - Illustration */}
         <div className="hidden md:flex justify-center items-center bg-gray-100 p-8">
           <img
-          
             src={signupImage}
             alt="Signup Illustration"
             className="max-w-xs"

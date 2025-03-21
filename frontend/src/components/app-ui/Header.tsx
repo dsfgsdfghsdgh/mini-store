@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoClose, IoSearchOutline } from "react-icons/io5";
+import { IoSearchOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { FiHeart } from "react-icons/fi";
@@ -17,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
 import { useTypedSelector } from "@/store/store";
 import Container from "./Container";
+import SearchBox from "./SearchBox";
 
 type CateResultType = {
   message: string;
@@ -78,24 +79,11 @@ export default function Header() {
           </div>
 
           {/* Search bar */}
-          <div className="hidden md:flex relative flex-1 max-w-xl mx-6">
-            <div className="relative w-full">
-              <input
-                type="text"
-                className="w-full h-10 pl-10 pr-10 rounded-lg border border-gray-300 focus:border-skyText focus:ring-1 focus:ring-skyText transition-all"
-                placeholder="Search products..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              <IoSearchOutline className="absolute top-3 left-3 text-gray-400" />
-              {searchText && (
-                <IoClose
-                  onClick={handleClearSearch}
-                  className="absolute top-3 right-3 text-gray-400 hover:text-redText cursor-pointer"
-                />
-              )}
-            </div>
-          </div>
+          <SearchBox
+            handleClearSearch={handleClearSearch}
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
 
           {/* User controls */}
           <div className="flex items-center space-x-1 md:space-x-6">

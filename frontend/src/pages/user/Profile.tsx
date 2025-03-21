@@ -13,7 +13,7 @@ const Profile = () => {
   }
   return (
     <Container>
-      <UserInfo user={user} />
+      <UserInfo />
     </Container>
   );
 };
