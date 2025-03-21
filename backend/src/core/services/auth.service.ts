@@ -95,9 +95,12 @@ export const loginUserService = async (data: loginUserServiceProps) => {
       expiresAt: thirtyDaysFromNow(),
     },
   });
+
+  const { password, ...rest } = userExists;
   return {
     accessToken,
     refreshToken,
-    user: { id: userExists.id, email: userExists.email },
+    user: rest,
+    session: updateSession,
   };
 };

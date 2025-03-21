@@ -1,7 +1,6 @@
 import { ProductProps } from "@/common/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
 interface CartState {
   cartProducts: ProductProps[];
 }
@@ -15,7 +14,9 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<ProductProps>) => {
-      const existing = state.cartProducts.find((p) => p._id === action.payload._id);
+      const existing = state.cartProducts.find(
+        (p) => p._id === action.payload._id
+      );
       if (existing) {
         existing.quantity += 1;
       } else {
@@ -23,15 +24,19 @@ const cartSlice = createSlice({
       }
       localStorage.setItem("cart", JSON.stringify(state.cartProducts));
     },
-    DecQuantityByOne : (state, action: PayloadAction<ProductProps>)=>{
-      const existing = state.cartProducts.find((p) => p._id === action.payload._id);
+    DecQuantityByOne: (state, action: PayloadAction<ProductProps>) => {
+      const existing = state.cartProducts.find(
+        (p) => p._id === action.payload._id
+      );
       if (existing && existing.quantity > 1) {
         existing.quantity -= 1;
       }
       localStorage.setItem("cart", JSON.stringify(state.cartProducts));
     },
     removeFromCart: (state, action: PayloadAction<ProductProps>) => {
-      const index = state.cartProducts.findIndex((p) => p._id === action.payload._id);
+      const index = state.cartProducts.findIndex(
+        (p) => p._id === action.payload._id
+      );
       if (index !== -1) {
         state.cartProducts.splice(index, 1);
       }
@@ -44,7 +49,8 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, resetCart,DecQuantityByOne,removeFromCart } = cartSlice.actions;
-const cartReducer= cartSlice.reducer;
+export const { addToCart, resetCart, DecQuantityByOne, removeFromCart } =
+  cartSlice.actions;
+const cartReducer = cartSlice.reducer;
 
 export default cartReducer;

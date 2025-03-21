@@ -10,7 +10,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import { CheckAuth } from "./components/layout/CheckAuth";
 import { useAppDispatch, useTypedSelector } from "./store/store";
 import { useEffect } from "react";
-import { checkAuth } from "./store/auth/authSlice";
+import { checkAuth, setAuthenticated } from "./store/auth/authSlice";
 import Loading from "./components/app-ui/Loading";
 import Cart from "./pages/user/Cart";
 import Favorite from "./pages/user/Favorite";
@@ -20,7 +20,7 @@ import Cancel from "./pages/payment/Cancel";
 import Orders from "./pages/user/Orders";
 
 function App() {
-  const { isAuthenticated, isLoading } = useTypedSelector(
+  const { isAuthenticated, isLoading, user } = useTypedSelector(
     (state) => state.auth
   );
   const location = useLocation();
@@ -29,9 +29,12 @@ function App() {
   const from = location.state?.from || "/";
 
   useEffect(() => {
-    dispatch(checkAuth());
-  }, [dispatch]);
-
+    if (user === null) {
+      dispatch(setAuthenticated(false));
+    } else {
+      dispatch(checkAuth());
+    }
+  }, [dispatch, user]);
   if (isLoading) return <Loading />;
 
   return (

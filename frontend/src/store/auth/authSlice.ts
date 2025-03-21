@@ -18,7 +18,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   isAuthenticated: false,
   isLoading: false,
-  user: null,
+  user: JSON.parse(localStorage.getItem("user") || "null"),
   error: null,
 };
 
@@ -69,7 +69,7 @@ export const checkAuth = createAsyncThunk("checkAuth/data", async () => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(error as string || "Error getting");
+    throw new Error((error as string) || "Error getting");
   }
 });
 
@@ -90,7 +90,11 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
       state.isAuthenticated = true;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
+    setAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload;
+      },
   },
   extraReducers(builder) {
     builder
@@ -112,12 +116,15 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         // console.log("action", action);
         state.isLoading = false;
-        state.user = action.payload.success ? action.payload.data : null;
+        state.user = action.payload.data;
         state.isAuthenticated = action.payload.success;
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error?.message || "error in user login";
+        state.user = null;
+        localStorage.setItem("user", JSON.stringify(state.user));
         // console.log("action", action);
       })
       .addCase(checkAuth.pending, (state) => {
@@ -125,12 +132,14 @@ const authSlice = createSlice({
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.success ? action.payload.data : null;
         state.isAuthenticated = action.payload.success;
       })
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
+        state.isAuthenticated = false;
         state.error = action.error?.message || "Authentication failed";
+        state.user = null;
+        localStorage.setItem("user", JSON.stringify(state.user));
         // console.log("action", action);
       })
       .addCase(logoutUser.pending, (state) => {
@@ -140,6 +149,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -149,7 +159,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setAuthenticated } = authSlice.actions;
 
 const authReducer = authSlice.reducer;
 
