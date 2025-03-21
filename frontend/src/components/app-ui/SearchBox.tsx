@@ -1,3 +1,4 @@
+import { mergedefaultCss } from "@/common/lib/mergeCustomTailwindCss";
 import { ProductProps } from "@/common/types/types";
 import { useTypedSelector } from "@/store/store";
 import { useEffect, useState } from "react";
@@ -8,12 +9,14 @@ type SearchBoxType = {
   searchText: string;
   setSearchText: (text: string) => void;
   handleClearSearch: () => void;
+  className?: string;
 };
 
 export default function SearchBox({
   handleClearSearch,
   searchText,
   setSearchText,
+  className,
 }: SearchBoxType) {
   const { data } = useTypedSelector((state) => state.products);
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
@@ -39,7 +42,12 @@ export default function SearchBox({
   };
 
   return (
-    <div className="hidden md:flex relative flex-1 max-w-xl mx-6">
+    <div
+      className={mergedefaultCss(
+        "hidden md:flex relative flex-1 max-w-xl mx-6",
+        className
+      )}
+    >
       <div className="relative w-full">
         {/* Search Input */}
         <input
@@ -59,12 +67,12 @@ export default function SearchBox({
 
         {/* Suggestions Dropdown */}
         {filteredProducts.length > 0 && (
-          <ul className="absolute left-0 w-full mt-2 bg-white border border-gray-200 shadow-lg rounded-lg max-h-60 overflow-y-auto z-10">
+          <ul className="absolute left-0 w-full mt-2 bg-white border border-gray-200 shadow-lg rounded-lg max-h-60 overflow-y-auto z-[100]">
             {filteredProducts.map((product) => (
               <li
                 key={product._id}
-                className={`px-4 py-2 text-gray-700 cursor-pointer hover:bg-sky-100 transition-all font-normal ${
-                  product._id ? "hover:underline text-sm text-center" : " "
+                className={`px-4 py-2 text-gray-700 cursor-pointer hover:bg-sky-100 transition-all font-normal md:text-sm text-[13px]   ${
+                  product._id ? "hover:underline text-center" : " "
                 }`}
                 onClick={() => handleOnProduct(product._id)}
               >

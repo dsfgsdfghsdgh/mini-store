@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { FiHeart } from "react-icons/fi";
@@ -18,6 +17,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { useTypedSelector } from "@/store/store";
 import Container from "./Container";
 import SearchBox from "./SearchBox";
+import Sidebar from "./Sidebar";
 
 type CateResultType = {
   message: string;
@@ -64,7 +64,7 @@ export default function Header() {
     >
       {/* Main header section */}
       <div className="bg-white border-b">
-        <Container className="md:h-15 h-13 flex items-center justify-between py-2">
+        <Container className="md:h-18 h-14 flex items-center justify-between py-2">
           {/* Text logo instead of image */}
           <div
             onClick={() => navigate("/")}
@@ -126,13 +126,17 @@ export default function Header() {
                 Cart
               </span>
             </button>
+
+            <span className="md:hidden block">
+              <Sidebar />
+            </span>
           </div>
         </Container>
       </div>
 
       {/* Category navigation */}
       <div className="bg-darkText text-white shadow-sm">
-        <Container className="flex items-center overflow-hidden md:py-5 py-4 ">
+        <Container className="flex items-center md:py-5 py-4 h-14 ">
           <DropdownMenu>
             <DropdownMenuTrigger className=" px-4 flex items-center gap-2 text-white hover:bg-darkText/80 transition-colors focus:outline-none">
               <span>Categories</span>
@@ -165,9 +169,12 @@ export default function Header() {
 
           {/* Mobile search button */}
           <div className="md:hidden ml-auto">
-            <button className="p-2 text-white">
-              <IoSearchOutline className="text-xl" />
-            </button>
+            <SearchBox
+              className="flex text-sm"
+              handleClearSearch={handleClearSearch}
+              searchText={searchText}
+              setSearchText={setSearchText}
+            />
           </div>
         </Container>
       </div>
