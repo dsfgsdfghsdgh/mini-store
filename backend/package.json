@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only --files src/index.ts",
    "build": "tsc && npm install && prisma generate --schema=./prisma/schema.prisma && npm install",
-		"start": "node backend/dist/src/index.js"
+		"start": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "Tilak",
